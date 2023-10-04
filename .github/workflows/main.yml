@@ -21,8 +21,6 @@ jobs:
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          echo "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}" >> .env
-          echo "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}" >> .env
           
       - name: Set up and build Docker Compose
         run: |
@@ -44,7 +42,7 @@ jobs:
       - name : Build, tag, and push image to Amazon ECR 
         run : | 
             docker-compose push
-            
+
       - name: Connect and Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -55,5 +53,6 @@ jobs:
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q)
             cd /home/ec2-user/
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com
             docker-compose pull  # Pull the latest images on EC2
             docker-compose up -d  # Run the containers on EC2

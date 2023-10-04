@@ -6,7 +6,7 @@ services:
       - "80:80"
     volumes:
       - static_volume:/static
-    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-web
+    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-web:latest
     depends_on:
       - web
     platform: linux/amd64
@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000"
     platform: linux/amd64
-    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-nginx
+    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-nginx:latest
     environment:
       - DJANGO_SETTINGS_MODULE=sports_live.settings.prod
     env_file:
