@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "sports"
+version = "0.1.0"
+description = ""
+authors = ["leehjhjhj <tsukiakarii@naver.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^4.2.5"
+djangorestframework = "^3.14.0"
+python-decouple = "^3.8"
+pymysql = "^1.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
