@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nginx:
+    build: ./config/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/static
+    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-web
+    depends_on:
+      - web
+    platform: linux/amd64
+  web:
+    build:
+      context: .
+      dockerfile: ./config/web/Dockerfile
+    volumes:
+      - static_volume:/project/data/static
+      - ./:/code
+    command: ["./start.sh"]
+    ports:
+      - "8000:8000"
+    platform: linux/amd64
+    image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-nginx
+    environment:
+      - DJANGO_SETTINGS_MODULE=sports_live.settings.prod
+    env_file:
+      - .env
+volumes:
+  static_volume:
