@@ -4,6 +4,7 @@ services:
     build: ./config/nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - static_volume:/static
       - ./:/etc/nginx/ssl
