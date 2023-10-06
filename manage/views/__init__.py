@@ -1,0 +1,1 @@
+from .game_register_view import GameRegisterView
