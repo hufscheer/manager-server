@@ -6,7 +6,7 @@ services:
       - "80:80"
     volumes:
       - static_volume:/static
-      - /home/ec2-user/etc:/etc/nginx/ssl
+      - ./:/etc/nginx/ssl
     image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-web:latest
     depends_on:
       - web
