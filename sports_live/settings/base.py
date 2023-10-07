@@ -16,7 +16,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = ['*']
-
+CORS_ALLOWED_ORIGINS = [
+	'http://localhost:3000',
+]
 
 # Application definition
 
@@ -32,6 +34,7 @@ DJANGO_APPS = [
 PACKAGE_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
     # 'rest_framework.authtoken',
     # 'dj_rest_auth',
     # 'dj_rest_auth.registration',
@@ -48,6 +51,7 @@ PROJECT_APPS = [
 INSTALLED_APPS = DJANGO_APPS + PACKAGE_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
