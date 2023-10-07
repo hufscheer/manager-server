@@ -1,1 +1,3 @@
 from .game_register_serializer import GameRegisterRequestSerializer
+from .change_game_score_serializer import GameInfoGetSerializer
+from .game_team_list_serializer import GameListSerializer

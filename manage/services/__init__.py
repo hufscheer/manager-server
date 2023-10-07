@@ -1,1 +1,3 @@
 from .game_register_serivce import post_game
+from .game_score_change_service import get_game_info, change_game_score
+from .game_team_list_service import get_team_list

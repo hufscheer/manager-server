@@ -7,7 +7,7 @@ class Record(models.Model):
     score = models.IntegerField()
     game = models.ForeignKey('Game', models.DO_NOTHING, blank=True, null=True)
     team = models.ForeignKey('Team', models.DO_NOTHING, blank=True, null=True)
-    scored_at = models.DateTimeField(auto_now=True)
+    scored_at = models.DateTimeField()
 
     class Meta:
         managed = False
