@@ -55,4 +55,4 @@ jobs:
             cd /home/ec2-user/
             aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com
             docker-compose pull  # Pull the latest images on EC2
-            docker-compose up -d  # Run the containers on EC2
+            # docker-compose up -d  # Run the containers on EC2
