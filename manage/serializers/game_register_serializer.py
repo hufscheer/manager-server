@@ -9,4 +9,4 @@ class GameRegisterRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('name', 'member', 'sportsName', 'firstTeam', 'secondTeam', 'startTime')
+        fields = ('name', 'member', 'sportsName', 'firstTeam', 'secondTeam', 'startTime', 'status_changed_at')
