@@ -19,7 +19,7 @@ class Game(models.Model):
     member = models.ForeignKey(Member, models.DO_NOTHING)
     second_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='game_second_team_set')
     game_status = models.CharField(max_length=11, choices=GAME_STATUS, default='BEFORE')
-    status_changed_at = models.DateTimeField(auto_now=True)
+    status_changed_at = models.DateTimeField()
 
     class Meta:
         managed = False
