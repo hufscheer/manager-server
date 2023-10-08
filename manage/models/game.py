@@ -5,6 +5,7 @@ class Game(models.Model):
     GAME_STATUS = (
         ('BEFORE', '경기전'),
         ('FIRST_HALF', '전반전'),
+        ('BREAK_TIME', '쉬는시간'),
         ('SECOND_HALF', '후반전'),
         ('END', '종료')
     )
