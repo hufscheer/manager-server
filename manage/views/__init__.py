@@ -1,3 +1,4 @@
 from .game_register_view import GameRegisterView
 from .game_score_change_view import GameScoreChangeView
 from .game_team_list_view import GameTeamListView
+from .game_status_change_view import GameStatusChangeView

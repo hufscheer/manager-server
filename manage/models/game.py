@@ -6,7 +6,7 @@ class Game(models.Model):
         ('BEFORE', '경기전'),
         ('FIRST_HALF', '전반전'),
         ('SECOND_HALF', '후반전'),
-        ('OVER', '종료')
+        ('END', '종료')
     )
     id = models.BigAutoField(primary_key=True)
     first_team_score = models.IntegerField(default=0)
@@ -17,7 +17,7 @@ class Game(models.Model):
     first_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='game_first_team_set')
     member = models.ForeignKey(Member, models.DO_NOTHING)
     second_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='game_second_team_set')
-    game_status = models.CharField(max_length=11, choices=GAME_STATUS, default='FIRST_HALF')
+    game_status = models.CharField(max_length=11, choices=GAME_STATUS, default='BEFORE')
     status_changed_at = models.DateTimeField(auto_now=True)
 
     class Meta:
