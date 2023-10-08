@@ -7,7 +7,7 @@ services:
       - 443:443
     volumes:
       - static_volume:/static
-      - ./:/etc/nginx/ssl
+      - ./etc/:/etc/ssl
     image: 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com/hufs-sports-live-web:latest
     depends_on:
       - web
