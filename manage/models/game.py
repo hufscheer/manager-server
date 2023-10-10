@@ -20,7 +20,7 @@ class Game(models.Model):
     second_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='game_second_team_set')
     game_status = models.CharField(max_length=11, choices=GAME_STATUS, default='BEFORE')
     status_changed_at = models.DateTimeField()
-
+    video_id = models.CharField(max_length=255, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'game'
