@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 
 COPY pyproject.toml poetry.lock ./
 
-RUN chmod +x start.sh
+RUN chmod +x ./scripts/start.sh
 
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
