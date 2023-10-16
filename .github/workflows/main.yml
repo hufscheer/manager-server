@@ -56,7 +56,7 @@ jobs:
         id: deploy
         run: |
             aws deploy create-deployment \
-            --application-name notion-slack \
+            --application-name hufscheer \
             --deployment-group-name hufscheer-group \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --s3-location bucket=hufscheer,bundleType=zip,key=deploy.zip
