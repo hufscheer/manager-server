@@ -1,5 +1,7 @@
 #!/bin/bash
 
-PROJECT_PATH=/home/ec2-user/
-cd ${PROJECT_PATH}
-docker-compose down
+containers=$(docker ps -q)
+ehco "컨테이너 종료"
+if [ -n "$containers" ]; then
+    docker stop $containers
+fi
