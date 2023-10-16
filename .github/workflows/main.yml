@@ -35,6 +35,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: make zip file
+        run: zip -r ./deploy.zip ./appspec.yml ./scripts/ ./docker-compose.yml
+
+      - name: upload zip file to S3
+        run: |
+          aws s3 cp \
+            --region ap-northeast-2 \
+            ./deploy.zip s3://hufscheer/deploy.zip
+
       - name: Login to Amazon ECR 
         id : login-ecr 
         uses : aws-actions/amazon-ecr-login@v1 
@@ -43,16 +52,11 @@ jobs:
         run : | 
             docker-compose push
 
-      - name: Connect and Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.WAS_HOST }}
-          username: ec2-user
-          key: ${{ secrets.KEY }}
-          script: |
-            docker stop $(docker ps -a -q) 
-            docker rm $(docker ps -a -q)
-            cd /home/ec2-user/
-            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 550581268183.dkr.ecr.ap-northeast-2.amazonaws.com
-            docker-compose pull  # Pull the latest images on EC2
-            docker-compose up -d  # Run the containers on EC2
+      - name: Create CodeDeploy Deployment
+        id: deploy
+        run: |
+            aws deploy create-deployment \
+            --application-name notion-slack \
+            --deployment-group-name hufscheer-group \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --s3-location bucket=hufscheer,bundleType=zip,key=deploy.zip

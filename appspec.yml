@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/
+    overwrite: yes
+permissions:
+  - object: /home/ec2-user/
+    owner: ec2-user
+    group: ec2-user
+    mode: 755
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_docker.sh
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/pull_images_from_ecr.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: ec2-user 
