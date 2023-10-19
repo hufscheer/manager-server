@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 from .repositories import CommentRepositoryImpl
-from .services.comment_block_service import CommentBlockService
+from .services import CommentBlockService
 
 class ManageContainer(containers.DeclarativeContainer):
     

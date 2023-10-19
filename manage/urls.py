@@ -4,8 +4,8 @@ from .views import (
                 GameStatusChangeView,
                 GameRegisterView,
                 GameScoreChangeView,
+                CommentBlockView,
             )
-from .views.comment_block_view import CommentBlockView
 app_name = 'manage'
 
 urlpatterns = [
