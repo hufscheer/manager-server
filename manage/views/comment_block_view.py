@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.models.is_admin_user import IsAdminUser
+from manage.app_config import ManageContainer
 
 class CommentBlockView(APIView):
     """
@@ -13,7 +14,6 @@ class CommentBlockView(APIView):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        from manage.app_config import ManageContainer
         self.comment_block_service = ManageContainer.comment_block_service()
 
     def post(self, request, comment_id: int):
