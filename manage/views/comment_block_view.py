@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.models.is_admin_user import IsAdminUser
-from manage.app_config import ManageContainer
+from manage.containers import ManageContainer
 
 class CommentBlockView(APIView):
     """
@@ -14,11 +14,11 @@ class CommentBlockView(APIView):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.comment_block_service = ManageContainer.comment_block_service()
+        self._comment_block_service = ManageContainer.comment_block_service()
 
     def post(self, request, comment_id: int):
         try:
-            self.comment_block_service.block_comment(comment_id)
+            self._comment_block_service.block_comment(comment_id)
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
              return Response({"detail": "잘못된 요청입니다.", "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

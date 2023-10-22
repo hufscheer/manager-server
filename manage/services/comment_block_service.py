@@ -1,11 +1,10 @@
-
+from manage.repositories import CommentRepository
 
 class CommentBlockService:
-    def __init__(self, *args, **kwargs):
-        from manage.app_config import ManageContainer
-        self.comment_repository = ManageContainer.comment_repository()
+    def __init__(self,comment_repository: CommentRepository, *args, **kwargs):
+        self._comment_repository = comment_repository
     
-    def block_comment(self, comment_id):
-        comment = self.comment_repository.find_commeny_by_id(comment_id)
+    def block_comment(self, comment_id: int):
+        comment = self._comment_repository.find_commeny_by_id(comment_id)
         comment.is_blocked = True
-        self.comment_repository.save(comment, 'is_blocked')
+        self._comment_repository.save(comment, 'is_blocked')

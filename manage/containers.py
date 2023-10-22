@@ -7,6 +7,6 @@ class ManageContainer(containers.DeclarativeContainer):
     comment_repository = providers.Factory(CommentRepositoryImpl)
     comment_block_service = providers.Factory(
         CommentBlockService,
-        comment_repository=comment_repository.provider,
+        comment_repository=comment_repository,
     )
 
