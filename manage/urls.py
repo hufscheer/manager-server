@@ -4,7 +4,7 @@ from .views import (
                 GameStatusChangeView,
                 GameRegisterView,
                 GameScoreChangeView,
-                CommentBlockView
+                CommentBlockView,
             )
 app_name = 'manage'
 

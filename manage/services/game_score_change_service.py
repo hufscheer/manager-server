@@ -1,5 +1,5 @@
 from manage.models.game import Game
-from manage.serializers.change_game_score_serializer import GameInfoGetSerializer, GameScoreChangePostSerializer
+from manage.serializers import GameInfoGetSerializer, GameScoreChangePostSerializer
 
 def get_game_info(game_id):
     game = Game.objects.get(id=game_id)
