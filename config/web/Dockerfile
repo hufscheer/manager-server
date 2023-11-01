@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 
 COPY pyproject.toml poetry.lock ./
 
-RUN chmod +x .config/scripts/docker_compose_command.sh
+RUN chmod +x ./config/scripts/docker_compose_command.sh
 
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
