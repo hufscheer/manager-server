@@ -19,7 +19,7 @@ services:
     volumes:
       - static_volume:/project/data/static
       - ./:/code
-    command: ["./scripts/docker_compose_command.sh"]
+    command: ["./config/scripts/docker_compose_command.sh"]
     ports:
       - "8000:8000"
     platform: linux/amd64
