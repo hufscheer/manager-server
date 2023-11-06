@@ -47,7 +47,6 @@ PACKAGE_APPS = [
 
 PROJECT_APPS = [
     'accounts',
-    'manage',
     'game',
     'team',
     'report',

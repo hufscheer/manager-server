@@ -1,12 +1,13 @@
 from django.db import models
+from game.domain import GameTeam
 
-class Comment(models.Model):
+class Comment(models.Model): 
     id = models.BigAutoField(primary_key=True)
-    content = models.CharField(max_length=255)
     created_at = models.DateTimeField()
-    game = models.ForeignKey('Game', models.DO_NOTHING, blank=True, null=True)
+    content = models.CharField(max_length=255)
     is_blocked = models.BooleanField(default=False)
+    game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'comment'
+        db_table = 'comments'
