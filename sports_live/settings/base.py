@@ -53,6 +53,7 @@ PROJECT_APPS = [
     'report',
     'league',
     'sport',
+    'record',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PACKAGE_APPS + PROJECT_APPS
