@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from accounts.models.is_admin_user import IsAdminUser
+from accounts.domain import IsAdminUser
 
 class PermissionTestView(APIView):
     """

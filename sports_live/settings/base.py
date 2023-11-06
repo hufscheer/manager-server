@@ -47,11 +47,12 @@ PACKAGE_APPS = [
 
 PROJECT_APPS = [
     'accounts',
-    'manage',
     'game',
     'team',
     'report',
     'league',
+    'sport',
+    'record',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PACKAGE_APPS + PROJECT_APPS

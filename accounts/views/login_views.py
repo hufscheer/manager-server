@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
-from accounts.models.member import Member
+from accounts.domain import Member
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
 
