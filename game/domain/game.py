@@ -8,6 +8,7 @@ class Game(models.Model):
     sport = models.ForeignKey(Sport, models.DO_NOTHING)
     member = models.ForeignKey(Member, models.DO_NOTHING)
     league = models.ForeignKey(League, models.DO_NOTHING)
+    name = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     video_id = models.CharField(max_length=255, blank=True, null=True)
     quarter_changed_at = models.DateTimeField()
