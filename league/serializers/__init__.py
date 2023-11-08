@@ -1,7 +1,1 @@
-from .league_serializer import (
-                    LeagueSerializer,
-                    LeagueRegistrationSerializer,
-                    LeagueSportRegistrationSerializer,
-                    LeagueSportChangeSerializer,
-                    LeagueDeleteSerializer,
-                )
+from .league_serializer import LeagueSerializer, LeagueRegistrationSerializer, LeagueSportRegistrationSerializer
