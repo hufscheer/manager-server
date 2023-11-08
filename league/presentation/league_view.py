@@ -6,6 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from league.containers import LeagueContainer
 
+
 class LeagueView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
