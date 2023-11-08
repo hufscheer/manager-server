@@ -6,7 +6,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField()
     content = models.CharField(max_length=255)
     is_blocked = models.BooleanField(default=False)
-    game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
+    game_team_id = models.BigIntegerField()
 
     class Meta:
         managed = False
