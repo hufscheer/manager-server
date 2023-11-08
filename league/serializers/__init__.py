@@ -3,4 +3,5 @@ from .league_serializer import (
                     LeagueRegistrationSerializer,
                     LeagueSportRegistrationSerializer,
                     LeagueSportChangeSerializer,
+                    LeagueDeleteSerializer,
                 )
