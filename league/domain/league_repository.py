@@ -15,3 +15,6 @@ class LeagueRepository:
             league.save(update_fields=[f'{args[0]}'])
         else:
             league.save()
+            
+    def get_all_leagues_by_organization_id(self, organization_id: int):
+        return League.objects.filter(organization_id=organization_id)
