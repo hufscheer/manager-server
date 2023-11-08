@@ -4,5 +4,5 @@ from league.presentation import LeagueView
 app_name = 'league'
 
 urlpatterns = [
-    path('register/', LeagueView.as_view()),
+    path('', LeagueView.as_view()),
 ]
