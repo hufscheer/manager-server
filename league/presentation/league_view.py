@@ -7,6 +7,7 @@ from accounts.domain import IsAdminUser
 from league.containers import LeagueContainer
 from league.domain import League
 
+
 class LeagueView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
