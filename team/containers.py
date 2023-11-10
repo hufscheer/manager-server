@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 from team.domain import TeamRepository
-from team.application import TeamService
+from team.application import TeamService, TeamGetService
 
 class TeamContainer(containers.DeclarativeContainer):
     team_repository = providers.Factory(TeamRepository)
@@ -8,4 +8,7 @@ class TeamContainer(containers.DeclarativeContainer):
         TeamService,
         team_repository=team_repository
     )
-
+    team_get_service = providers.Factory(
+        TeamGetService,
+        team_repository=team_repository
+    )
