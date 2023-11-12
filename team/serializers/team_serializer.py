@@ -10,3 +10,6 @@ class TeamSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = '__all__'
+
+class TeamChangeRequestSerializer(TeamRegisterRequestSerializer):
+    pass
