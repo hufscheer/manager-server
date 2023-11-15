@@ -1,11 +1,12 @@
 from team.domain import Team
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 class TeamRepository:
     def save_team(self, team: Team):
         team.save()
     
     def find_all_teams_by_league_id(self, league_id: int):
-        return Team.objects.filter(league_id=league_id)
+        return get_list_or_404(Team, league_id=league_id)
     
     def find_team_by_id(self, team_id: int):
-        return Team.objects.get(id=team_id)
+        return get_object_or_404(Team, id=team_id)
