@@ -4,13 +4,15 @@ from django.core.exceptions import PermissionDenied
 from team.serializers import TeamRegisterRequestSerializer, TeamChangeRequestSerializer, TeamSaveSerializer
 from utils.upload_to_s3 import upload_to_s3
 from team.domain import Team
-from league.domain import League
+from league.domain import League, LeagueRepository
 
 class TeamService:
-    def __init__(self, team_repository: TeamRepository, *args, **kwargs):
+    def __init__(self, team_repository: TeamRepository, league_repository: LeagueRepository, *args, **kwargs):
         self._team_repository = team_repository
+        self._league_repository = league_repository
 
-    def register_teams(self, request_data, league: League, user_data: Member):
+    def register_teams(self, request_data, league_id: int, user_data: Member):
+        league: League = self._league_repository.find_league_by_id(league_id)
         teams_data_serializer = TeamRegisterRequestSerializer(data=request_data)
         teams_data_serializer.is_valid(raise_exception=True)
         team_data = teams_data_serializer.validated_data
@@ -29,10 +31,11 @@ class TeamService:
         if error_team:
             return {"errorTeams": error_team}
         
-    def change_team(self, request_data, league: League, team: Team, user_data: Member):
+    def change_team(self, request_data, league_id: int, team_id: int, user_data: Member):
+        team: Team = self._team_repository.find_team_by_id(team_id)
         if team.organization != user_data.organization:
             raise PermissionDenied
-
+        league: League = self._league_repository.find_league_by_id(league_id)
         team_change_request_serializer = TeamChangeRequestSerializer(data=request_data)
         team_change_request_serializer.is_valid(raise_exception=True)
         team_change_data = team_change_request_serializer.validated_data
@@ -43,6 +46,3 @@ class TeamService:
         team_save_serialzier = TeamSaveSerializer(team, data={'name': team_name, 'logo_image_url': logo_url, 'administrator': user_data.id}, partial=True)
         team_save_serialzier.is_valid(raise_exception=True)
         team_save_serialzier.save()
-
-    def find_one_team(self, team_id: int):
-        return self._team_repository.find_team_by_id(team_id)
