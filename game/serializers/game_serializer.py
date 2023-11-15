@@ -13,7 +13,6 @@ class GameRequestSerializer(serializers.ModelSerializer):
 
 class GameSaveSerializer(serializers.ModelSerializer):
     video_id = serializers.CharField(allow_null=True, required=False)
-    league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
     
     class Meta:
         model = Game

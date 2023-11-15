@@ -5,7 +5,6 @@ from django.core.exceptions import PermissionDenied
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from team.containers import TeamContainer
-from league.containers import LeagueContainer
 
 class TeamGetView(APIView):
     authentication_classes = [JWTAuthentication]
