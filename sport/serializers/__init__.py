@@ -1,1 +1,1 @@
-from .sport_serializer import SportsNameResponseSerializer
+from .sport_serializer import SportsNameResponseSerializer, SportsQuarterResponseSerializer
