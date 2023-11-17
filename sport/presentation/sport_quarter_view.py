@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from sport.containers import SportContainer
 
-class SportView(APIView):
+class SportQuarterView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
@@ -14,6 +14,6 @@ class SportView(APIView):
         super().__init__(*args, **kwargs)
         self._sport_serivce = SportContainer.sport_service()
 
-    def get(self, request):
-        response = self._sport_serivce.get_all_sport_list()
+    def get(self, request, sport_id: int):
+        response = self._sport_serivce.get_all_quarter_list(sport_id)
         return Response(response, status=status.HTTP_200_OK)
