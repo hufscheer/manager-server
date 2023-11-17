@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from game.domain import Game
-from league.domain import League
 
 class GameRequestSerializer(serializers.ModelSerializer):
     sportsId = serializers.IntegerField(source='sport')
@@ -13,8 +12,14 @@ class GameRequestSerializer(serializers.ModelSerializer):
 
 class GameSaveSerializer(serializers.ModelSerializer):
     video_id = serializers.CharField(allow_null=True, required=False)
-    league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
     
     class Meta:
         model = Game
         fields = '__all__'
+
+class GameChangeRequestSerializer(GameRequestSerializer):
+    gameQuarter = serializers.CharField(source='game_quarter')
+    
+    class Meta:
+        model = Game
+        fields = ('sportsId', 'startTime', 'name', 'videoId', 'gameQuarter', 'state',)

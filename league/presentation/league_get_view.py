@@ -20,5 +20,3 @@ class LeagueGetView(APIView):
             return Response(response, status.HTTP_200_OK)
         except Exception as e:
              return Response({"detail": "잘못된 요청입니다.", "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        except League.DoesNotExist:
-            return Response({"error": "리그를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
