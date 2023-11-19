@@ -1,5 +1,9 @@
-from game.domain import GameRepository
-from game.serializers import GameTeamSaveSerializer, GameTeamRequestSerializer
+from game.domain import GameRepository, GameTeamPlayer
+from game.serializers import (
+                            GameTeamSaveSerializer,
+                            GameTeamRequestSerializer,
+                            GameTeamPlayerRequestSerialzier,
+                            )
 from team.domain import TeamRepository
 
 class GameTeamService:
@@ -21,3 +25,17 @@ class GameTeamService:
             game_team_save_serializer = GameTeamSaveSerializer(data={'game': game.id, 'team': team.id})
             game_team_save_serializer.is_valid(raise_exception=True)
             game_team_save_serializer.save()
+    
+    def register_game_team_player(self, game_team_id: int, request_data):
+        game_team = self._game_repository.find_game_team_by_id(game_team_id)
+        game_team_player_request_serializer = GameTeamPlayerRequestSerialzier(data=request_data, many=True)
+        game_team_player_request_serializer.is_valid(raise_exception=True)
+        game_team_player_datas = game_team_player_request_serializer.validated_data
+
+        for game_team_player_data in game_team_player_datas:
+            game_team_player = GameTeamPlayer(
+                game_team=game_team,
+                name=game_team_player_data.get('name'),
+                description=game_team_player_data.get('description')
+            )
+            self._game_repository.save_game_team_player(game_team_player)
