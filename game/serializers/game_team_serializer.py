@@ -21,3 +21,10 @@ class GameTeamPlayerSaveSerialzier(serializers.ModelSerializer):
     class Meta:
         model = GameTeamPlayer
         fields = '__all__'
+
+class GameTeamPlayerChangeSerialzier(serializers.ModelSerializer):
+    id = serializers.IntegerField(allow_null=True, required=False)
+
+    class Meta:
+        model = GameTeamPlayer
+        fields = ('id', 'name', 'description',)
