@@ -3,4 +3,9 @@ from .game_serializer import (
                     GameSaveSerializer,
                     GameChangeRequestSerializer,
                     )
-from .game_team_serializer import GameTeamSaveSerializer, GameTeamRequestSerializer
+from .game_team_serializer import (
+                            GameTeamSaveSerializer,
+                            GameTeamRequestSerializer,
+                            GameTeamPlayerRequestSerialzier,
+                            GameTeamPlayerSaveSerialzier,
+                            )
