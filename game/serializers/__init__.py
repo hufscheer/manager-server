@@ -8,4 +8,5 @@ from .game_team_serializer import (
                             GameTeamRequestSerializer,
                             GameTeamPlayerRequestSerialzier,
                             GameTeamPlayerSaveSerialzier,
+                            GameTeamPlayerChangeSerialzier,
                             )
