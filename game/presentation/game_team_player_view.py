@@ -17,3 +17,7 @@ class GameTeamPlayerView(APIView):
     def post(self, request, game_team_id: int):
         self._game_team_serivice.register_game_team_player(game_team_id, request.data)
         return Response(status=status.HTTP_201_CREATED)
+    
+    def put(self, request, game_team_id: int):
+        self._game_team_serivice.change_game_team_player(game_team_id, request.data)
+        return Response(status=status.HTTP_200_OK)
