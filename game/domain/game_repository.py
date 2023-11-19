@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from game.domain import Game, GameTeam
+from game.domain import Game, GameTeam, GameTeamPlayer
 
 class GameRepository:
     
@@ -8,3 +8,9 @@ class GameRepository:
 
     def save_game_team(self, game_team: GameTeam):
         game_team.save()
+    
+    def find_game_team_by_id(self, game_team_id: int):
+        return get_object_or_404(GameTeam, id=game_team_id)
+    
+    def save_game_team_player(self, game_team_player: GameTeamPlayer):
+        game_team_player.save()
