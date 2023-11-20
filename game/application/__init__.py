@@ -1,2 +1,3 @@
 from .game_serivice import GameService
 from .game_team_serivce import GameTeamService
+from .game_team_get_service import GameTeamGetService

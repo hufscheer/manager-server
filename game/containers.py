@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 from game.domain import GameRepository
-from game.application import GameService, GameTeamService
+from game.application import GameService, GameTeamService, GameTeamGetService
 from team.domain import TeamRepository
 from league.domain import LeagueRepository
 
@@ -18,4 +18,9 @@ class GameContainer(containers.DeclarativeContainer):
         GameTeamService,
         game_repository=game_repository,
         team_repository=team_repository,
+    )
+
+    game_team_get_serivice = providers.Factory(
+        GameTeamGetService,
+        game_repository=game_repository,
     )
