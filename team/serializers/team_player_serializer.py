@@ -6,3 +6,9 @@ class TeamPlayerRegisterRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamPlayer
         fields = ('name', 'description')
+
+class TeamPlayerChangeRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TeamPlayer
+        fields = ('name', 'description')
