@@ -10,3 +10,4 @@ from .game_team_serializer import (
                             GameTeamPlayerSaveSerialzier,
                             GameTeamPlayerChangeSerialzier,
                             )
+from .game_team_get_serializer import GameTeamPlayerGetSerializer
