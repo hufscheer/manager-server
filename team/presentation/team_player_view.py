@@ -17,3 +17,7 @@ class TeamPlayerView(APIView):
     def post(self, request, team_id: int):
         response = self._team_player_service.register_team_players(request_data=request.data, team_id=team_id)
         return Response(response, status=status.HTTP_201_CREATED)
+    
+    def put(self, request, team_player_id: int):
+        self._team_player_service.change_team_player(request.data, team_player_id)
+        return Response(status=status.HTTP_200_OK)
