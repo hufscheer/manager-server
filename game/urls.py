@@ -1,5 +1,5 @@
 from django.urls import path
-from game.presentation import GameView, GameTeamView, GameChangeView, GameTeamPlayerView
+from game.presentation import GameView, GameTeamView, GameChangeView, GameTeamPlayerView, GameTeamPlayerGetView
 
 app_name = 'game'
 
@@ -8,4 +8,5 @@ urlpatterns = [
     path('team/<int:game_id>/', GameTeamView.as_view()),
     path('change/<int:game_id>/', GameChangeView.as_view()),
     path('team/<int:game_team_id>/player/', GameTeamPlayerView.as_view()),
+    path('team/<int:game_team_id>/player/all/', GameTeamPlayerGetView.as_view()),
 ]
