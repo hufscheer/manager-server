@@ -1,7 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from django.core.exceptions import PermissionDenied
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from team.containers import TeamContainer
@@ -21,3 +20,7 @@ class TeamPlayerView(APIView):
     def put(self, request, team_player_id: int):
         self._team_player_service.change_team_player(request.data, team_player_id)
         return Response(status=status.HTTP_200_OK)
+    
+    def delete(self, request, team_player_id: int):
+        self._team_player_service.delete_team_player(team_player_id, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
