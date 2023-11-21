@@ -4,6 +4,7 @@ from team.application import (
                         TeamService,
                         TeamGetService,
                         TeamPlayerService,
+                        TeamPlayerGetService,
                         )
 from league.domain import LeagueRepository
 
@@ -23,6 +24,11 @@ class TeamContainer(containers.DeclarativeContainer):
     )
     team_player_service = providers.Factory(
         TeamPlayerService,
+        team_repository=team_repository,
+        team_player_repository=team_player_repository
+    )
+    team_player_get_service = providers.Factory(
+        TeamPlayerGetService,
         team_repository=team_repository,
         team_player_repository=team_player_repository
     )
