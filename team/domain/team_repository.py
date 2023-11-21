@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 class TeamRepository:
     def save_team(self, team: Team):
         team.save()
-    
+
     def find_all_teams_by_league_id(self, league_id: int):
         return get_list_or_404(Team, league_id=league_id)
     
