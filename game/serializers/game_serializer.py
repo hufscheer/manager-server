@@ -25,3 +25,7 @@ class GameChangeRequestSerializer(GameRequestSerializer):
     class Meta:
         model = Game
         fields = ('sportsId', 'startTime', 'name', 'videoId', 'gameQuarter', 'state',)
+
+class GameExtraInfoResponseSerializer(serializers.Serializer):
+    sportName = serializers.CharField(source='sport_name')
+    state = serializers.CharField()
