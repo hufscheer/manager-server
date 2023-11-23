@@ -5,6 +5,7 @@ from game.serializers import (
                             GameTeamPlayerRequestSerialzier,
                             GameTeamPlayerChangeSerialzier,
                             GameTeamPlayerSaveSerialzier,
+                            GameScoreChangeSerializer,
                             )
 from team.domain import TeamRepository
 
@@ -61,6 +62,19 @@ class GameTeamService:
         if exist_game_team_player_ids:
             self._game_repository.delete_game_team_players_by_ids(exist_game_team_player_ids)
 
+    def change_score(self, request_data: dict):
+        game_score_change_serializer = GameScoreChangeSerializer(data=request_data)
+        game_score_change_serializer.is_valid(raise_exception=True)
+        game_score_data: dict = game_score_change_serializer.validated_data
+        team_score_mapping_list: list[dict] = game_score_data.get('team_score')
+
+        for team_score_mapping in team_score_mapping_list:
+            team_id = team_score_mapping.get('id')
+            new_score = team_score_mapping.get('score')
+
+            game_team: GameTeam = self._game_repository.find_game_team_by_id(team_id)
+            game_team.score = new_score
+            self._game_repository.save_game_team(game_team)
 
     def _get_exist_game_team_players(self, game_team_id: int):
         game_team_players = self._game_repository.find_game_team_players_by_game_team_id(game_team_id)
