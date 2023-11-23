@@ -10,3 +10,6 @@ class TeamRepository:
     
     def find_team_by_id(self, team_id: int):
         return get_object_or_404(Team, id=team_id)
+    
+    def find_team_with_league_by_id(self, team_id: int):
+        return get_object_or_404(Team.objects.select_related('league'), id=team_id)
