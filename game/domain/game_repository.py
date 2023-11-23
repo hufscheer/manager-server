@@ -23,3 +23,6 @@ class GameRepository:
     
     def delete_game_team_players_by_ids(self, ids: set):
         GameTeamPlayer.objects.filter(id__in=ids).delete()
+
+    def save_game(self, game: Game):
+        game.save()
