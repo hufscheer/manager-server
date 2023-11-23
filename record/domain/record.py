@@ -1,5 +1,6 @@
 from django.db import models
 from game.domain import Game, GameTeam, GameTeamPlayer
+from sport.domain import Quarter
 
 class Record(models.Model): 
     id = models.BigAutoField(primary_key=True)
@@ -7,8 +8,8 @@ class Record(models.Model):
     game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
     game_team_player = models.ForeignKey(GameTeamPlayer, models.DO_NOTHING)
     score = models.IntegerField()
-    scored_quarter = models.CharField(max_length=255)
-    scored_at = models.DateTimeField()
+    quarter = models.ForeignKey(Quarter, models.DO_NOTHING)
+    scored_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
