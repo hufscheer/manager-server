@@ -23,3 +23,12 @@ class Game(models.Model):
     class Meta:
         managed = False
         db_table = 'games'
+
+    @property
+    def game_state_korean(self):
+        mapping = {
+            'PLAYING': '진행중',
+            'FINISHED': '종료',
+            'SCHEDULED': '예정',
+        }
+        return mapping.get(self.state)
