@@ -8,7 +8,7 @@ class Record(models.Model):
     game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
     game_team_player = models.ForeignKey(GameTeamPlayer, models.DO_NOTHING)
     score = models.IntegerField()
-    quarter = models.ForeignKey(Quarter, models.DO_NOTHING)
+    scored_quarter = models.ForeignKey(Quarter, models.DO_NOTHING)
     scored_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
