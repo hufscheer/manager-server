@@ -5,7 +5,7 @@ class SportsNameResponseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Sport
-        fields = ('name',)
+        fields = ('id', 'name',)
 
 class SportsQuarterResponseSerializer(serializers.ModelSerializer):
     
