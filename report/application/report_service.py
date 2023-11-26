@@ -22,6 +22,15 @@ class ReportService:
         response_dto = self._ResponseDto(pending_report_infos, is_blocked_report_infos)
         return ReportResponseSerializer(response_dto).data
     
+    def block_comment(self, comment_id: int):
+        comment: Comment = self._comment_repository.find_comment_by_id(comment_id)
+        print(comment.is_blocked)
+        if comment.is_blocked == b'\x00':
+            comment.is_blocked = True
+        elif comment.is_blocked == b'\x01':
+            comment.is_blocked = False
+        self._comment_repository.save_comment(comment)
+
     def _get_report_info_object(self, game_team_ids: list[int], reports_or_comments: List[Union[Comment, Report]], user_data: Member):
         game_team_objects = self._game_repository.find_game_team_with_game_league_and_sport_by_ids(game_team_ids, user_data)
         game_team_dict = {game_team.id: game_team for game_team in game_team_objects}
