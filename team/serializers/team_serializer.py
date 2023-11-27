@@ -3,7 +3,7 @@ from team.domain import Team
 
 class TeamRegisterRequestSerializer(serializers.Serializer):
     name = serializers.ListField(child=serializers.CharField())
-    logoImageUrl = serializers.ListField(child=serializers.ImageField(), source='logos')
+    logo = serializers.ListField(child=serializers.ImageField(), source='logo')
     
 class TeamSaveSerializer(serializers.ModelSerializer):
 

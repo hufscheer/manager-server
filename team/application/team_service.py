@@ -17,7 +17,7 @@ class TeamService:
         teams_data_serializer.is_valid(raise_exception=True)
         team_data = teams_data_serializer.validated_data
         team_name = team_data.get('name')[0]
-        team_logo = team_data.get('logos')[0]
+        team_logo = team_data.get('logo')[0]
         logo_url = upload_to_s3(image_data=team_logo, team_name=team_name, league_name=league.name)
         new_team = Team(name=team_name, logo_image_url=logo_url, league=league, administrator=user_data, organization=user_data.organization)
         self._team_repository.save_team(new_team)
