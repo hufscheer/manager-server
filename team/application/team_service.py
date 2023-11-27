@@ -16,20 +16,11 @@ class TeamService:
         teams_data_serializer = TeamRegisterRequestSerializer(data=request_data)
         teams_data_serializer.is_valid(raise_exception=True)
         team_data = teams_data_serializer.validated_data
-        teams_names = team_data.get('names')
-        teams_logos = team_data.get('logos')
-        error_team = []
-
-        for i, team_name in enumerate(teams_names):
-            team_logo = teams_logos[i]
-            try:
-                logo_url = upload_to_s3(image_data=team_logo, team_name=team_name, league_name=league.name)
-                new_team = Team(name=team_name, logo_image_url=logo_url, league=league, administrator=user_data, organization=user_data.organization)
-                self._team_repository.save_team(new_team)
-            except:
-                error_team.append(team_name)
-        if error_team:
-            return {"errorTeams": error_team}
+        team_name = team_data.get('name')[0]
+        team_logo = team_data.get('logos')[0]
+        logo_url = upload_to_s3(image_data=team_logo, team_name=team_name, league_name=league.name)
+        new_team = Team(name=team_name, logo_image_url=logo_url, league=league, administrator=user_data, organization=user_data.organization)
+        self._team_repository.save_team(new_team)
         
     def change_team(self, request_data, team_id: int, user_data: Member):
         team: Team = self._team_repository.find_team_with_league_by_id(team_id)
