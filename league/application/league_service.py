@@ -4,6 +4,7 @@ from league.serializers import (
                     LeagueSportRegistrationSerializer,
                     LeagueSportChangeSerializer,
                     LeagueDeleteSerializer,
+                    LeagueRegisterResponseSerializer,
                 )
 from accounts.domain import Member
 from league.domain import LeagueSport, League
@@ -26,6 +27,7 @@ class LeagueService:
 
         sport_ids: list[int] = league_sport_data.get('sport_data')
         self._register_league_sports(sport_ids=sport_ids, league=league)
+        return LeagueRegisterResponseSerializer(self._ResponseLeagueIdDto(league_id=league.id)).data
 
     def change_league(self, request_data , user_data: Member):
         league_sport_serializer = LeagueSportChangeSerializer(data=request_data)
@@ -68,3 +70,7 @@ class LeagueService:
         for sport_id in sport_ids:
             leage_sport = LeagueSport(sport_id=sport_id, league_id=league.id)
             self._league_repository.save_sports(leage_sport)
+        
+    class _ResponseLeagueIdDto:
+        def __init__(self, league_id: int):
+            self.league_id = league_id

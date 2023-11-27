@@ -16,8 +16,8 @@ class LeagueView(APIView):
         self._league_serivice = LeagueContainer.league_service()
 
     def post(self, request):
-        self._league_serivice.register_league(request.data, request.user)
-        return Response(status=status.HTTP_201_CREATED)
+        response = self._league_serivice.register_league(request.data, request.user)
+        return Response(response, status=status.HTTP_201_CREATED)
 
     def put(self, request):
         try:
