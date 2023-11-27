@@ -24,3 +24,6 @@ class LeagueSportChangeSerializer(LeagueSportRegistrationSerializer):
     
 class LeagueDeleteSerializer(serializers.Serializer):
     leagueId = serializers.IntegerField(source='league_id')
+
+class LeagueRegisterResponseSerializer(serializers.Serializer):
+    leagueId = serializers.IntegerField(source='league_id')
