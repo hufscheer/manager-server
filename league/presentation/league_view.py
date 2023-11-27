@@ -29,6 +29,6 @@ class LeagueView(APIView):
     def delete(self, request):
         try:
             self._league_serivice.delete_league(request.data, request.user)
-            return Response(status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
         except PermissionDenied:
             return Response({"error": "권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
