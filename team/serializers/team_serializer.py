@@ -2,8 +2,8 @@ from rest_framework import serializers
 from team.domain import Team
 
 class TeamRegisterRequestSerializer(serializers.Serializer):
-    names = serializers.ListField(child=serializers.CharField())
-    logos = serializers.ListField(child=serializers.ImageField())
+    name = serializers.ListField(child=serializers.CharField())
+    logo = serializers.ListField(child=serializers.ImageField(), source='logo')
     
 class TeamSaveSerializer(serializers.ModelSerializer):
 
