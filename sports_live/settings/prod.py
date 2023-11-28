@@ -3,7 +3,7 @@ from decouple import config
 import pymysql
 
 pymysql.install_as_MySQLdb()
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     'default': {
