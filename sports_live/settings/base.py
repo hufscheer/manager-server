@@ -18,8 +18,7 @@ SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = [
 	'http://localhost:3000',
-    'https://hufstreaming.site',
-    'https://hufstreaming-client.vercel.app'
+    'https://hufscheer.site',
 ]
 
 # Application definition
