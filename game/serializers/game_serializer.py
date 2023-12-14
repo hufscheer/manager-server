@@ -19,7 +19,7 @@ class GameSaveSerializer(serializers.ModelSerializer):
         model = Game
         fields = '__all__'
 
-class GameChangeRequestSerializer(GameRequestSerializer):
+class GameChangeSerializer(GameRequestSerializer):
     gameQuarter = serializers.CharField(source='game_quarter')
     gameName = serializers.CharField(source='name')
 
