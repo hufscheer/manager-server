@@ -21,6 +21,10 @@ class GameRepository:
                         GameTeam.objects.select_related('game__league', 'game__sport').filter(game__league__organization=user.organization),
                         id__in=game_team_ids
                     )
+    def find_game_teams_with_team_by_game_id(self, game_id: int):
+        return get_list_or_404(
+            GameTeam.objects.select_related('team').filter(game_id=game_id)
+        )
 
     def save_game_team_player(self, game_team_player: GameTeamPlayer):
         game_team_player.save()
