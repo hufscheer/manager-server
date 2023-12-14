@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from game.domain import Game
+from sport.domain import Sport
 
 class GameRequestSerializer(serializers.ModelSerializer):
     sportsId = serializers.IntegerField(source='sport_id')
@@ -27,6 +28,21 @@ class GameChangeSerializer(GameRequestSerializer):
         model = Game
         fields = ('sportsId', 'startTime', 'gameName', 'videoId', 'gameQuarter', 'state',)
 
-class GameExtraInfoResponseSerializer(serializers.Serializer):
-    sportName = serializers.CharField(source='sport_name')
-    state = serializers.CharField()
+class _SportsInfoSerializer(serializers.ModelSerializer):
+    sportsId = serializers.IntegerField(source='id')
+    sportsName = serializers.CharField(source='name')
+
+    class Meta:
+        model = Sport
+        fields = ('sportsId', 'sportsName')
+
+class GameInfoResponseSerializer(serializers.ModelSerializer):
+    sports = _SportsInfoSerializer(source='sport')
+    startTime = serializers.CharField(source='start_time')
+    gameName = serializers.CharField(source='name')
+    videoId = serializers.CharField(source='video_id')
+    gameQuarter = serializers.CharField(source='game_quarter')
+
+    class Meta:
+        model = Game
+        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter')

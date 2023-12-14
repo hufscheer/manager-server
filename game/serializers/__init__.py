@@ -2,7 +2,7 @@ from .game_serializer import (
                     GameRequestSerializer,
                     GameSaveSerializer,
                     GameChangeSerializer,
-                    GameExtraInfoResponseSerializer,
+                    GameInfoResponseSerializer,
                     )
 from .game_team_serializer import (
                             GameTeamSaveSerializer,
