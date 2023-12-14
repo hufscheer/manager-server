@@ -2,8 +2,7 @@ from game.domain import GameRepository, Game, GameTeam
 from accounts.domain import Member
 from game.serializers import (
                     GameRequestSerializer,
-                    GameSaveSerializer,
-                    GameChangeRequestSerializer,
+                    GameChangeSerializer,
                     GameExtraInfoResponseSerializer,
                 )
 from league.domain import LeagueRepository, League
@@ -32,10 +31,7 @@ class GameService:
         game: Game = self._game_repository.find_game_by_id(game_id)
         if game.administrator_id != user_data.id:
             raise PermissionDenied
-        game_change_request_serializer = GameChangeRequestSerializer(data=request_data)
-        game_change_request_serializer.is_valid(raise_exception=True)
-        game_change_data = game_change_request_serializer.validated_data
-        game_save_serializer = GameSaveSerializer(game, data=game_change_data, partial=True)
+        game_save_serializer = GameChangeSerializer(game, data=request_data)
         game_save_serializer.is_valid(raise_exception=True)
         game_save_serializer.save()
 

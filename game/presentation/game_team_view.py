@@ -15,8 +15,5 @@ class GameTeamView(APIView):
         self._game_team_serivce = GameContainer.game_team_serivice()
 
     def post(self, request, game_id: int):
-        try:
-            self._game_team_serivce.create_game_team(request.data, game_id)
-            return Response(status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
+        self._game_team_serivce.create_game_team(request.data, game_id)
+        return Response(status=status.HTTP_200_OK)

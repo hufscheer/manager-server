@@ -33,6 +33,11 @@ class TeamService:
         team_logo = team_change_data.get('logos')[0]
         logo_url = upload_to_s3(image_data=team_logo, team_name=team_name, league_name=team.league.name)
     
-        team_save_serialzier = TeamSaveSerializer(team, data={'name': team_name, 'logo_image_url': logo_url, 'administrator': user_data.id}, partial=True)
+        team_save_serialzier = TeamSaveSerializer(team, data=self.TeamDto(team_name, logo_url), partial=True)
         team_save_serialzier.is_valid(raise_exception=True)
         team_save_serialzier.save()
+
+    class TeamDto:
+        def __init__(self, name: str, logo_image_url: str):
+            self.name = name
+            self.logo_image_url = logo_image_url

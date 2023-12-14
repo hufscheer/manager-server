@@ -22,7 +22,7 @@ class GameTeamService:
 
         for team_id in team_ids:
             team = self._team_repository.find_team_by_id(team_id)
-            game_team_save_serializer = GameTeamSaveSerializer(data={'game': game.id, 'team': team.id})
+            game_team_save_serializer = GameTeamSaveSerializer(data=self._GameTeamDto(game.id, team.id))
             game_team_save_serializer.is_valid(raise_exception=True)
             game_team_save_serializer.save()
     
@@ -38,3 +38,8 @@ class GameTeamService:
             game_team: GameTeam = self._game_repository.find_game_team_by_id(team_id)
             game_team.score = new_score
             self._game_repository.save_game_team(game_team)
+
+    class _GameTeamDto:
+        def __init__(self, game: int, team: int):
+            self.game = game
+            self.team = team
