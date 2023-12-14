@@ -3,7 +3,7 @@ from accounts.domain import Member
 from game.serializers import (
                     GameRequestSerializer,
                     GameChangeSerializer,
-                    GameExtraInfoResponseSerializer,
+                    GameInfoResponseSerializer,
                 )
 from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
@@ -35,11 +35,11 @@ class GameService:
         game_save_serializer.is_valid(raise_exception=True)
         game_save_serializer.save()
 
-    def get_extra_game_info(self, game_id: int):
+    def get_game_info(self, game_id: int):
         game: Game = self._game_repository.find_game_with_sport_by_id(game_id)
-        dto = self._ExtraGameInfoDTO(game.sport.name, game.game_state_korean)
-        return GameExtraInfoResponseSerializer(dto).data
-
+        game_info_response_serialzier = GameInfoResponseSerializer(game)
+        return game_info_response_serialzier.data
+    
     def _create_game_object(self, game_data: dict, user_data: Member, league: League) -> Game:
         return Game(
             sport_id=game_data.get('sport_id'),
