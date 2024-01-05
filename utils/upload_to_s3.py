@@ -10,7 +10,7 @@ def upload_to_s3(image_data, team_name: str, league_name: str):
         s3 = boto3.client('s3', aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key)
         object_name = f"{team_name}.{image_data.content_type.split('/')[-1]}"
         key = league_name + '/' + object_name
-        s3.put_object(Body=image_data, Bucket=bucket_name, Key=key, ContentType='jpg')
+        s3.put_object(Body=image_data, Bucket=bucket_name, Key=key, ContentType=image_data.content_type)
         url = f"https://{bucket_name}.s3.ap-northeast-2.amazonaws.com/{key}"
         return url
     
