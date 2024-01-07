@@ -17,3 +17,8 @@ class TeamSaveError(APIException):
     def __init__(self, team_name):
         self.team_name = team_name
         super().__init__(self.default_detail, self.default_code)
+
+class EmptyLogoError(APIException):
+    status_code = 400
+    default_detail = "로고를 업로드 하지 않은 팀이 존재합니다."
+    default_code = 'empty_logo_error'
