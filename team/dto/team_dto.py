@@ -14,9 +14,3 @@ class TeamMakeDTO:
     def __init__(self, name: str, logo) -> None:
         self.name = name
         self.logo = logo
-
-    def to_dict(self):
-        return {
-            'name': self.name,
-            'logo': self.logo,
-        }
