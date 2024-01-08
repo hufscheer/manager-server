@@ -5,7 +5,7 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
     if response is not None:
-        if isinstance(exc, (S3UploadError, TeamSaveError, EmptyLogoError)):
+        if isinstance(exc, (S3UploadError, TeamSaveError)):
             response.data['teamName'] = exc.team_name
             response.data['code'] = exc.default_code
 
