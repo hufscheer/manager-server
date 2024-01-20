@@ -6,14 +6,14 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from team.containers import TeamContainer
 
-class TeamView(APIView):
+class TeamRegisterView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._team_service = TeamContainer.team_service()
-
-    def put(self, request, team_id: int, *args, **kwargs):
-        self._team_service.change_team(request_data=request.data, team_id=team_id, user_data=request.user)
-        return Response(status=status.HTTP_200_OK)
+        self._team_register_service = TeamContainer.team_register_service()
+        
+    def post(self, request, league_id: int):
+        response = self._team_register_service.register_teams(request_data=request.data, league_id=league_id, user_data=request.user)
+        return Response(response, status=status.HTTP_201_CREATED)
