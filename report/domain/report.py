@@ -1,5 +1,5 @@
 from django.db import models
-from report.domain import Comment
+from report.domain import CheerTalk
 
 class Report(models.Model):
     REPORT_STATE_CHOICES = (
@@ -9,7 +9,7 @@ class Report(models.Model):
         ('PENDING', 'pending')
     )
     id = models.BigAutoField(primary_key=True)
-    comment = models.ForeignKey(Comment, models.DO_NOTHING, unique=True)
+    cheer_talk = models.ForeignKey(CheerTalk, models.DO_NOTHING, unique=True)
     reported_at = models.DateTimeField()
     state = models.CharField(max_length=255, choices=REPORT_STATE_CHOICES)
 

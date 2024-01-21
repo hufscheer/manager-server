@@ -1,6 +1,6 @@
 from django.db import models
 
-class GameTeamPlayer(models.Model):
+class LineupPlayer(models.Model):
     id = models.BigAutoField(primary_key=True)
     game_team = models.ForeignKey('GameTeam', models.DO_NOTHING)
     name = models.CharField(max_length=255)
@@ -8,4 +8,4 @@ class GameTeamPlayer(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'game_team_players'
+        db_table = 'lineup_players'
