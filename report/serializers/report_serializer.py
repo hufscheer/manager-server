@@ -11,16 +11,16 @@ class _GameInfoSerializer(serializers.ModelSerializer):
         model = GameTeam
         fields = ('leagueName', 'sportName', 'gameName',)
 
-class _CommentInfoSerializer(serializers.ModelSerializer):
-    commentId = serializers.IntegerField(source='id')
+class _CheerTalkInfoSerializer(serializers.ModelSerializer):
+    cheerTalkId = serializers.IntegerField(source='id')
     createdAt = serializers.DateTimeField(source='created_at')
 
     class Meta:
         model = CheerTalk
-        fields = ('commentId', 'content', 'createdAt',)
+        fields = ('cheerTalkId', 'content', 'createdAt',)
 
-class _CommentReportInfoSerializer(serializers.ModelSerializer):
-    commentId = serializers.IntegerField(source='comment.id')
+class _CheerTalkReportInfoSerializer(serializers.ModelSerializer):
+    cheerTalkId = serializers.IntegerField(source='comment.id')
     reportId = serializers.IntegerField(source='id')
     content = serializers.CharField(source='comment.content')
     createdAt = serializers.DateTimeField(source='comment.created_at')
@@ -28,15 +28,15 @@ class _CommentReportInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Report
-        fields = ('commentId', 'reportId', 'content', 'createdAt', 'reportedAt',)
+        fields = ('cheerTalkId', 'reportId', 'content', 'createdAt', 'reportedAt',)
 
 class _PendingReportSerializer(serializers.Serializer):
     gameInfo = _GameInfoSerializer(source='game_info')
-    reportInfo = _CommentReportInfoSerializer(source='report_info')
+    reportInfo = _CheerTalkReportInfoSerializer(source='report_info')
     
 class _IsBlockedReportSerializer(serializers.Serializer):
     gameInfo = _GameInfoSerializer(source='game_info')
-    reportInfo = _CommentInfoSerializer(source='report_info')
+    reportInfo = _CheerTalkInfoSerializer(source='report_info')
 
 class ReportResponseSerializer(serializers.Serializer):
     pending = _PendingReportSerializer(many=True)

@@ -5,5 +5,5 @@ app_name = 'report'
 
 urlpatterns = [
     path('', ReportView.as_view()),
-    path('comment/<int:comment_id>/', BlockCheerTalkView.as_view())
+    path('cheer-talk/<int:cheer_talk_id>/', BlockCheerTalkView.as_view())
 ]
