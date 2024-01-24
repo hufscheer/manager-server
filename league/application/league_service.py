@@ -20,7 +20,7 @@ class LeagueService:
         league_sport_data = league_sport_serializer.validated_data
         league_data = league_sport_data.get('league_data')
         league_data['organization'] = user_data.organization_id
-        league_data['administrator'] = user_data.id
+        league_data['manager'] = user_data.id
         league_serializer = LeagueSerializer(data=league_data)
         league_serializer.is_valid(raise_exception=True)
         league: League = league_serializer.save()
@@ -37,11 +37,11 @@ class LeagueService:
         league_data: dict = league_sport_data.get('league_data')
 
         target_league : League = self._league_repository.find_league_by_id(league_id)
-        if target_league.administrator != user_data:
+        if target_league.manager != user_data:
             raise PermissionDenied
         
         league_data['organization'] = user_data.organization_id
-        league_data['administrator'] = user_data.id
+        league_data['manager'] = user_data.id
         league_serializer = LeagueSerializer(target_league, data=league_data)
         league_serializer.is_valid(raise_exception=True)
         league: League = league_serializer.save()
@@ -57,7 +57,7 @@ class LeagueService:
         league_id = league_delete_data.get('league_id')
         target_league = self._league_repository.find_league_by_id(id=league_id)
 
-        if target_league.administrator != user_data:
+        if target_league.manager != user_data:
             raise PermissionDenied
         
         self._make_leage_is_deleted_true(target_league)
