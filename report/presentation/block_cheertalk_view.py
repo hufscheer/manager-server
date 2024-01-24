@@ -5,7 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from report.containers import ReportContainer
 
-class BlockCommentView(APIView):
+class BlockCheerTalkView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
@@ -13,6 +13,6 @@ class BlockCommentView(APIView):
         super().__init__(*args, **kwargs)
         self._report_service = ReportContainer.report_service()
 
-    def post(self, request, comment_id: int):
-        response = self._report_service.block_comment(comment_id)
+    def post(self, request, cheer_talk_id: int):
+        response = self._report_service.block_cheer_talk(cheer_talk_id)
         return Response(response, status=status.HTTP_200_OK)

@@ -1,2 +1,2 @@
 from .report_view import ReportView
-from .block_comment_view import BlockCommentView
+from .block_cheertalk_view import BlockCheerTalkView

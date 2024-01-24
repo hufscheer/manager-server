@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from game.domain import GameTeam
-from report.domain import Comment, Report
+from report.domain import CheerTalk, Report
 
 class _GameInfoSerializer(serializers.ModelSerializer):
     leagueName = serializers.CharField(source='game.league.name')
@@ -16,7 +16,7 @@ class _CommentInfoSerializer(serializers.ModelSerializer):
     createdAt = serializers.DateTimeField(source='created_at')
 
     class Meta:
-        model = Comment
+        model = CheerTalk
         fields = ('commentId', 'content', 'createdAt',)
 
 class _CommentReportInfoSerializer(serializers.ModelSerializer):
