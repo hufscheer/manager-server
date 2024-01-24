@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
-from game.domain import Game, GameTeam, GameTeamPlayer
+from game.domain import Game, GameTeam, LineupPlayer
 from accounts.domain import Member
 
 class GameRepository:
@@ -26,17 +26,17 @@ class GameRepository:
             GameTeam.objects.select_related('team').filter(game_id=game_id)
         )
 
-    def save_game_team_player(self, game_team_player: GameTeamPlayer):
-        game_team_player.save()
+    def save_lineup_player(self, lineup_player: LineupPlayer):
+        lineup_player.save()
 
-    def find_game_team_players_by_game_team_id(self, game_team_id: int):
-        return get_list_or_404(GameTeamPlayer, game_team_id=game_team_id)
+    def find_lineup_players_by_game_team_id(self, game_team_id: int):
+        return get_list_or_404(LineupPlayer, game_team_id=game_team_id)
     
-    def find_game_team_player_by_id(self, game_team_player_id: int):
-        return get_object_or_404(GameTeamPlayer, id=game_team_player_id)
+    def find_lineup_player_by_id(self, lineup_player_id: int):
+        return get_object_or_404(LineupPlayer, id=lineup_player_id)
     
-    def delete_game_team_players_by_ids(self, ids: set):
-        GameTeamPlayer.objects.filter(id__in=ids).delete()
+    def delete_lineup_players_by_ids(self, ids: set):
+        LineupPlayer.objects.filter(id__in=ids).delete()
 
     def save_game(self, game: Game):
         game.save()

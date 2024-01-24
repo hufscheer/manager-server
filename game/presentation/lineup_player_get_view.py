@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from game.containers import GameContainer
 
-class GameTeamPlayerGetView(APIView):
+class LineupPlayerGetView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
@@ -15,5 +15,5 @@ class GameTeamPlayerGetView(APIView):
         self._game_team_get_serivce = GameContainer.game_team_get_serivice()
 
     def get(self, request, game_team_id: int):
-        response = self._game_team_get_serivce.get_all_game_team_player(game_team_id)
+        response = self._game_team_get_serivce.get_all_lineup_players(game_team_id)
         return Response(response, status=status.HTTP_200_OK)
