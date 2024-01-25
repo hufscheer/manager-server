@@ -11,11 +11,11 @@ router = routers.DefaultRouter()
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Statchung API",
+        title="훕치치 매니저서버 API",
         default_version='v1',
-        description="Test description",
+        description="훕치치 매니저서버의 API 명세입니다.",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        contact=openapi.Contact(email="tsukiakarii@naver.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
