@@ -20,10 +20,10 @@ class _CheerTalkInfoSerializer(serializers.ModelSerializer):
         fields = ('cheerTalkId', 'content', 'createdAt',)
 
 class _CheerTalkReportInfoSerializer(serializers.ModelSerializer):
-    cheerTalkId = serializers.IntegerField(source='comment.id')
+    cheerTalkId = serializers.IntegerField(source='cheer_talk.id')
     reportId = serializers.IntegerField(source='id')
-    content = serializers.CharField(source='comment.content')
-    createdAt = serializers.DateTimeField(source='comment.created_at')
+    content = serializers.CharField(source='cheer_talk.content')
+    createdAt = serializers.DateTimeField(source='cheer_talk.created_at')
     reportedAt = serializers.DateTimeField(source='reported_at')
 
     class Meta:
@@ -32,12 +32,12 @@ class _CheerTalkReportInfoSerializer(serializers.ModelSerializer):
 
 class _PendingReportSerializer(serializers.Serializer):
     gameInfo = _GameInfoSerializer(source='game_info')
-    reportInfo = _CheerTalkReportInfoSerializer(source='report_info')
+    reportInfo = _CheerTalkReportInfoSerializer(source='report_or_cheer_talk')
     
 class _IsBlockedReportSerializer(serializers.Serializer):
     gameInfo = _GameInfoSerializer(source='game_info')
-    reportInfo = _CheerTalkInfoSerializer(source='report_info')
+    reportInfo = _CheerTalkInfoSerializer(source='report_or_cheer_talk')
 
 class ReportResponseSerializer(serializers.Serializer):
     pending = _PendingReportSerializer(many=True)
-    isBlocked = _IsBlockedReportSerializer(many=True, source='is_blocked_comments')
+    isBlocked = _IsBlockedReportSerializer(many=True, source='blocked_cheer_talks_infos')
