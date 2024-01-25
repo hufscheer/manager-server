@@ -2,7 +2,7 @@ from team.domain import TeamRepository
 from accounts.domain import Member
 from team.serializers import TeamRegisterRequestSerializer
 from utils import S3Connect, SqsConnect
-from team.domain import Team
+from team.domain import LeagueTeam
 from league.domain import LeagueRepository
 from django.db import transaction
 from utils.exceptions.team_exceptions import S3UploadError, TeamSaveError, EmptyLogoError
@@ -10,7 +10,7 @@ from team.dto import TeamRequestDTO, TeamMakeDTO
 from league.domain import League
 
 class TeamRegisterService:
-    def __init__(self, team_repository: TeamRepository, league_repository: LeagueRepository, *args, **kwargs):
+    def __init__(self, team_repository: TeamRepository, league_repository: LeagueRepository):
         self._team_repository = team_repository
         self._league_repository = league_repository
         self._s3_conn = S3Connect()
@@ -54,7 +54,7 @@ class TeamRegisterService:
             with transaction.atomic():
                 for i, team_name in enumerate(teams_names):
                     logo_url = self._uploaded_logo_urls[i]
-                    new_team = Team(name=team_name, logo_image_url=logo_url, league=league, administrator=user_data, organization=user_data.organization)
+                    new_team = LeagueTeam(name=team_name, logo_image_url=logo_url, league=league, manager=user_data, organization=user_data.organization)
                     self._team_repository.save_team(new_team)
         except:
             save_error_teams.append(team_name)
