@@ -29,7 +29,7 @@ class GameService:
 
     def change_game(self, game_id: int, request_data, user_data: Member):
         game: Game = self._game_repository.find_game_by_id(game_id)
-        if game.administrator_id != user_data.id:
+        if game.manger_id != user_data.id:
             raise PermissionDenied
         game_save_serializer = GameChangeSerializer(game, data=request_data)
         game_save_serializer.is_valid(raise_exception=True)

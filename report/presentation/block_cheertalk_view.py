@@ -1,19 +1,18 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from django.core.exceptions import PermissionDenied
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
-from game.containers import GameContainer
+from report.containers import ReportContainer
 
-class GameTeamPlayerGetView(APIView):
+class BlockCheerTalkView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._game_team_get_serivce = GameContainer.game_team_get_serivice()
+        self._report_service = ReportContainer.report_service()
 
-    def get(self, request, game_team_id: int):
-        response = self._game_team_get_serivce.get_all_game_team_player(game_team_id)
+    def post(self, request, cheer_talk_id: int):
+        response = self._report_service.block_cheer_talk(cheer_talk_id)
         return Response(response, status=status.HTTP_200_OK)

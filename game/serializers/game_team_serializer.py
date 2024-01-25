@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from game.domain import GameTeam, GameTeamPlayer
+from game.domain import GameTeam, LineupPlayer
 
 class GameTeamSaveSerializer(serializers.ModelSerializer):
     
@@ -10,28 +10,28 @@ class GameTeamSaveSerializer(serializers.ModelSerializer):
 class GameTeamRequestSerializer(serializers.Serializer):
     teamIds = serializers.ListField(child=serializers.IntegerField(), source='team_ids')
 
-class GameTeamPlayerRequestSerialzier(serializers.ModelSerializer):
+class LineupPlayerRequestSerialzier(serializers.ModelSerializer):
     
     class Meta:
-        model = GameTeamPlayer
+        model = LineupPlayer
         fields = ('name', 'description',)
 
-class GameTeamPlayerSaveSerialzier(serializers.ModelSerializer):
+class LineupPlayerSaveSerialzier(serializers.ModelSerializer):
 
     class Meta:
-        model = GameTeamPlayer
+        model = LineupPlayer
         fields = '__all__'
 
-class GameTeamPlayerChangeSerialzier(serializers.ModelSerializer):
+class LineupPlayerChangeSerialzier(serializers.ModelSerializer):
     id = serializers.IntegerField(allow_null=True, required=False)
 
     class Meta:
-        model = GameTeamPlayer
+        model = LineupPlayer
         fields = ('id', 'name', 'description',)
 
-class GameTeamScoreMappingSerializer(serializers.Serializer):
+class _GameTeamScoreMappingSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     score = serializers.IntegerField()
 
 class GameScoreChangeSerializer(serializers.Serializer):
-    teamIdScore = GameTeamScoreMappingSerializer(many=True, source='team_score')
+    teamIdScore = _GameTeamScoreMappingSerializer(many=True, source='team_score')

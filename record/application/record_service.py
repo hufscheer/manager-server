@@ -20,7 +20,7 @@ class RecordService:
         new_record = Record(
             game_id=game_id,
             game_team_id=record_data.get('game_team_id'),
-            game_team_player_id=record_data.get('game_team_player_id'),
+            lineup_player_id=record_data.get('lineup_player_id'),
             score=record_data.get('score'),
             scored_quarter_id=record_data.get('quarter_id')
         )

@@ -1,4 +1,4 @@
-from .game_serivice import GameService
+from .game_service import GameService
 from .game_team_serivce import GameTeamService
 from .game_team_get_service import GameTeamGetService
-from .game_team_player_service import GameTeamPlayerService
+from .lineup_player_service import LineupPlayerService

@@ -7,9 +7,9 @@ from .game_serializer import (
 from .game_team_serializer import (
                             GameTeamSaveSerializer,
                             GameTeamRequestSerializer,
-                            GameTeamPlayerRequestSerialzier,
-                            GameTeamPlayerSaveSerialzier,
-                            GameTeamPlayerChangeSerialzier,
+                            LineupPlayerRequestSerialzier,
+                            LineupPlayerSaveSerialzier,
+                            LineupPlayerChangeSerialzier,
                             GameScoreChangeSerializer
                             )
-from .game_team_get_serializer import GameTeamPlayerGetSerializer, GameTeamInfoSerializer
+from .game_team_get_serializer import LineupPlayerGetSerializer, GameTeamInfoSerializer

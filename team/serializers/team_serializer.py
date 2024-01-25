@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from team.domain import Team
+from team.domain import LeagueTeam
 
 class TeamRegisterRequestSerializer(serializers.Serializer):
     name = serializers.CharField()
@@ -8,7 +8,7 @@ class TeamRegisterRequestSerializer(serializers.Serializer):
 class TeamSaveSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Team
+        model = LeagueTeam
         fields = '__all__'
 
 class TeamChangeRequestSerializer(TeamRegisterRequestSerializer):

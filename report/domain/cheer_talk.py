@@ -1,7 +1,6 @@
 from django.db import models
-from game.domain import GameTeam
 
-class Comment(models.Model): 
+class CheerTalk(models.Model): 
     id = models.BigAutoField(primary_key=True)
     created_at = models.DateTimeField()
     content = models.CharField(max_length=255)
@@ -10,4 +9,4 @@ class Comment(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'comments'
+        db_table = 'cheer_talks'

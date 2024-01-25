@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from game.domain import GameTeamPlayer, GameTeam
+from game.domain import LineupPlayer, GameTeam
 
-class GameTeamPlayerGetSerializer(serializers.ModelSerializer):
+class LineupPlayerGetSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = GameTeamPlayer
+        model = LineupPlayer
         fields = ('id', 'name', 'description')
 
 class GameTeamInfoSerializer(serializers.ModelSerializer):

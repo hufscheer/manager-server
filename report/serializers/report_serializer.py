@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from game.domain import GameTeam
-from report.domain import Comment, Report
+from report.domain import CheerTalk, Report
 
-class GameInfoSerializer(serializers.ModelSerializer):
+class _GameInfoSerializer(serializers.ModelSerializer):
     leagueName = serializers.CharField(source='game.league.name')
     sportName = serializers.CharField(source='game.sport.name')
     gameName = serializers.CharField(source='game.name')
@@ -11,33 +11,33 @@ class GameInfoSerializer(serializers.ModelSerializer):
         model = GameTeam
         fields = ('leagueName', 'sportName', 'gameName',)
 
-class CommentInfoSerializer(serializers.ModelSerializer):
-    commentId = serializers.IntegerField(source='id')
+class _CheerTalkInfoSerializer(serializers.ModelSerializer):
+    cheerTalkId = serializers.IntegerField(source='id')
     createdAt = serializers.DateTimeField(source='created_at')
 
     class Meta:
-        model = Comment
-        fields = ('commentId', 'content', 'createdAt',)
+        model = CheerTalk
+        fields = ('cheerTalkId', 'content', 'createdAt',)
 
-class CommentReportInfoSerializer(serializers.ModelSerializer):
-    commentId = serializers.IntegerField(source='comment.id')
+class _CheerTalkReportInfoSerializer(serializers.ModelSerializer):
+    cheerTalkId = serializers.IntegerField(source='cheer_talk.id')
     reportId = serializers.IntegerField(source='id')
-    content = serializers.CharField(source='comment.content')
-    createdAt = serializers.DateTimeField(source='comment.created_at')
+    content = serializers.CharField(source='cheer_talk.content')
+    createdAt = serializers.DateTimeField(source='cheer_talk.created_at')
     reportedAt = serializers.DateTimeField(source='reported_at')
 
     class Meta:
         model = Report
-        fields = ('commentId', 'reportId', 'content', 'createdAt', 'reportedAt',)
+        fields = ('cheerTalkId', 'reportId', 'content', 'createdAt', 'reportedAt',)
 
-class PendingReportSerializer(serializers.Serializer):
-    gameInfo = GameInfoSerializer(source='game_info')
-    reportInfo = CommentReportInfoSerializer(source='report_info')
+class _PendingReportSerializer(serializers.Serializer):
+    gameInfo = _GameInfoSerializer(source='game_info')
+    reportInfo = _CheerTalkReportInfoSerializer(source='report_or_cheer_talk')
     
-class IsBlockedReportSerializer(serializers.Serializer):
-    gameInfo = GameInfoSerializer(source='game_info')
-    reportInfo = CommentInfoSerializer(source='report_info')
+class _IsBlockedReportSerializer(serializers.Serializer):
+    gameInfo = _GameInfoSerializer(source='game_info')
+    reportInfo = _CheerTalkInfoSerializer(source='report_or_cheer_talk')
 
 class ReportResponseSerializer(serializers.Serializer):
-    pending = PendingReportSerializer(many=True)
-    isBlocked = IsBlockedReportSerializer(many=True, source='is_blocked_comments')
+    pending = _PendingReportSerializer(many=True)
+    isBlocked = _IsBlockedReportSerializer(many=True, source='blocked_cheer_talks_infos')
