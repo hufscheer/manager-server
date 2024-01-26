@@ -20,7 +20,9 @@ class PermissionTestView(APIView):
             return Response({"detail": "잘못된 요청입니다.", "error": e}, status=status.HTTP_400_BAD_REQUEST)
 
 class MakePasswordTest(APIView):
-
+    """
+    서버용 테스트 API 입니다.
+    """
     def post(self, request, *args, **kwargs):
         password = request.data.get('password')
         password = make_password(password)

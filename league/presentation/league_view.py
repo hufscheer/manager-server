@@ -5,7 +5,13 @@ from django.core.exceptions import PermissionDenied
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from league.containers import LeagueContainer
-from league.domain import League
+from drf_yasg.utils import swagger_auto_schema
+from league.serializers import (
+    LeagueSportRegistrationSerializer,
+    LeagueRegisterResponseSerializer,
+    LeagueSportChangeSerializer,
+    LeagueDeleteSerializer,
+)
 
 class LeagueView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -15,20 +21,29 @@ class LeagueView(APIView):
         super().__init__(*args, **kwargs)
         self._league_serivice = LeagueContainer.league_service()
 
+    @swagger_auto_schema(
+            request_body=LeagueSportRegistrationSerializer,
+            responses={"201": LeagueRegisterResponseSerializer}
+            )
     def post(self, request):
+        """
+        리그 생성 API
+        """
         response = self._league_serivice.register_league(request.data, request.user)
         return Response(response, status=status.HTTP_201_CREATED)
-
+    
+    @swagger_auto_schema(request_body=LeagueSportChangeSerializer, responses={"200": ""})
     def put(self, request):
-        try:
-            self._league_serivice.change_league(request.data, request.user)
-            return Response(status.HTTP_200_OK)
-        except PermissionDenied:
-            return Response({"error": "권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
+        """
+        리그 수정 API
+        """
+        self._league_serivice.change_league(request.data, request.user)
+        return Response(status.HTTP_200_OK)
         
+    @swagger_auto_schema(request_body=LeagueDeleteSerializer, responses={"204": ""})
     def delete(self, request):
-        try:
-            self._league_serivice.delete_league(request.data, request.user)
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except PermissionDenied:
-            return Response({"error": "권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
+        """
+        리그 삭제 API
+        """
+        self._league_serivice.delete_league(request.data, request.user)
+        return Response(status.HTTP_204_NO_CONTENT)
