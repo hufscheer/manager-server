@@ -5,6 +5,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from league.containers import LeagueContainer
 from league.domain import League
+from drf_yasg.utils import swagger_auto_schema
+from league.serializers import LeagueGetSerializer
 
 class LeagueGetView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -14,9 +16,10 @@ class LeagueGetView(APIView):
         super().__init__(*args, **kwargs)
         self._league_get_service = LeagueContainer.league_get_service()
 
+    @swagger_auto_schema(responses={"200": LeagueGetSerializer(many=True)})
     def get(self, request):
-        try:
-            response = self._league_get_service.get_leagues(request.user)
-            return Response(response, status.HTTP_200_OK)
-        except Exception as e:
-             return Response({"detail": "잘못된 요청입니다.", "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        """
+        리그 전제 조회 API
+        """
+        response = self._league_get_service.get_leagues(request.user)
+        return Response(response, status.HTTP_200_OK)
