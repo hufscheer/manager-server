@@ -38,7 +38,7 @@ class _SportsInfoSerializer(serializers.ModelSerializer):
 
 class GameInfoResponseSerializer(serializers.ModelSerializer):
     sports = _SportsInfoSerializer(source='sport')
-    startTime = serializers.CharField(source='start_time')
+    startTime = serializers.DateTimeField(source='start_time')
     gameName = serializers.CharField(source='name')
     videoId = serializers.CharField(source='video_id')
     gameQuarter = serializers.CharField(source='game_quarter')
