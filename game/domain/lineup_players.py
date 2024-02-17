@@ -5,6 +5,8 @@ class LineupPlayer(models.Model):
     game_team = models.ForeignKey('GameTeam', models.DO_NOTHING)
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255, blank=True, null=True)
+    number = models.IntegerField()
+    is_captain = models.BooleanField(default=False)
 
     class Meta:
         managed = False
