@@ -6,7 +6,7 @@ pymysql.install_as_MySQLdb()
 DEBUG = False
 
 STATIC_URL = '/static/'
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'data/static')
 
 DATABASES = {
