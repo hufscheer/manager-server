@@ -8,5 +8,4 @@ class LeagueSport(models.Model):
     league = models.ForeignKey('League', models.DO_NOTHING)
 
     class Meta:
-        managed = False
         db_table = 'league_sports'

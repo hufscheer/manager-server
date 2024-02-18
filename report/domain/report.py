@@ -14,5 +14,4 @@ class Report(models.Model):
     state = models.CharField(max_length=255, choices=REPORT_STATE_CHOICES)
 
     class Meta:
-        managed = False
         db_table = 'reports'

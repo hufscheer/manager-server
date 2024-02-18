@@ -21,7 +21,6 @@ class Game(models.Model):
     state = models.CharField(max_length=255, choices=GAME_CHOICES, default='SCHEDULED')
 
     class Meta:
-        managed = False
         db_table = 'games'
 
     @property

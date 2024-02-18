@@ -5,5 +5,4 @@ class Sport(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
         db_table = 'sports'

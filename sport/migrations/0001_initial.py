@@ -13,27 +13,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Organization',
+            name='Sport',
             fields=[
                 ('id', models.BigAutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=255)),
             ],
             options={
-                'db_table': 'organizations',
+                'db_table': 'sports',
             },
         ),
         migrations.CreateModel(
-            name='Member',
+            name='Quarter',
             fields=[
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
                 ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('email', models.CharField(max_length=255, unique=True)),
-                ('is_manager', models.BooleanField()),
-                ('password', models.CharField(max_length=255)),
-                ('organization', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='accounts.organization')),
+                ('name', models.CharField(max_length=255)),
+                ('sports', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sport.sport')),
             ],
             options={
-                'db_table': 'members',
+                'db_table': 'quarters',
             },
         ),
     ]

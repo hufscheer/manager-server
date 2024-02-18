@@ -9,5 +9,4 @@ class GameTeam(models.Model):
     score = models.IntegerField(default=0)
 
     class Meta:
-        managed = False
         db_table = 'game_teams'

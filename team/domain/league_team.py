@@ -11,5 +11,4 @@ class LeagueTeam(models.Model):
     organization = models.ForeignKey(Organization, models.DO_NOTHING)
 
     class Meta:
-        managed = False
         db_table = 'league_teams'

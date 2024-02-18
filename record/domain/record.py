@@ -15,7 +15,6 @@ class Record(models.Model):
     record_type = models.CharField(max_length=255, choices=RECORD_TYPE_CHOICES, null=True)
 
     class Meta:
-        managed = False
         db_table = 'records'
 
 class ScoreRecord(models.Model):
@@ -25,7 +24,6 @@ class ScoreRecord(models.Model):
     score = models.IntegerField()
 
     class Meta:
-        managed = False
         db_table = 'score_records'
 
 class ReplacementRecord(models.Model):
@@ -35,5 +33,4 @@ class ReplacementRecord(models.Model):
     replaced_lineup_player = models.ForeignKey(LineupPlayer, models.DO_NOTHING)
     
     class Meta:
-        managed = False
         db_table = 'replacement_records'

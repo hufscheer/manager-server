@@ -11,5 +11,4 @@ class League(models.Model):
     end_at = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'leagues'

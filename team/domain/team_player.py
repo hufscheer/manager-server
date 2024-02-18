@@ -8,5 +8,4 @@ class LeagueTeamPlayer(models.Model):
     number = models.IntegerField(null=True)
     
     class Meta:
-        managed = False
         db_table = 'league_team_players'

@@ -8,5 +8,4 @@ class CheerTalk(models.Model):
     game_team_id = models.BigIntegerField()
 
     class Meta:
-        managed = False
         db_table = 'cheer_talks'

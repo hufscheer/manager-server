@@ -6,5 +6,4 @@ class Quarter(models.Model):
     sports = models.ForeignKey('Sport', models.CASCADE)
 
     class Meta:
-        managed = False
         db_table = 'quarters'

@@ -9,5 +9,4 @@ class LineupPlayer(models.Model):
     is_captain = models.BooleanField(default=False)
 
     class Meta:
-        managed = False
         db_table = 'lineup_players'
