@@ -8,7 +8,8 @@ VALUES  (1, 'test@test.com', 1, 'test', 1),
         (3, 'test3@test.com', 1, 'test', 2);
 
 INSERT INTO sports (id, name)
-VALUES  (1, '축구');
+VALUES  (1, '축구'),
+        (2, '농구');
 
 INSERT INTO quarters (id, name, sports_id)
 VALUES  (1, '전반전', 1),
