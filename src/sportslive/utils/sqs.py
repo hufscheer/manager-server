@@ -1,7 +1,14 @@
 import boto3
 from decouple import config
+from abc import ABC, abstractmethod
 
-class SqsConnect:
+class AbstractSqsConnect(ABC):
+
+    @abstractmethod
+    def send_message_to_sqs(self, s3_key):
+        pass
+
+class SqsConnect(AbstractSqsConnect):
     _aws_access_key = config('S3_ACCESS_KEY')
     _aws_secret_key = config('S3_SECRET_ACCESS_KEY')
     _sqs_queue_url = config('SQS_QUEUE_URL')
@@ -15,3 +22,8 @@ class SqsConnect:
             MessageBody=s3_key
         )
         return response
+
+class FakeSqsConnect(AbstractSqsConnect):
+
+    def send_message_to_sqs(self, s3_key):
+        return True
