@@ -18,7 +18,9 @@ class TestLeague:
             "leagueData": {
                 "name": "푸드파이터대회",
                 "startAt": "2019-08-24T14:15:22Z",
-                "endAt": "2019-08-24T14:15:22Z"
+                "endAt": "2019-08-24T14:15:22Z",
+                "maxRound": 16,
+                "inProgressRound": 16
             },
             "sportData": [
                 1
@@ -35,7 +37,9 @@ class TestLeague:
             "leagueData": {
                 "name": "푸파대회",
                 "startAt": "2024-03-20 00:00:00",
-                "endAt": "2024-03-25 00:00:00"
+                "endAt": "2024-03-25 00:00:00",
+                "maxRound": 32,
+                "inProgressRound": 4
             },
             "sportData": [
                 2
@@ -45,6 +49,8 @@ class TestLeague:
     
         self._league_service.change_league(request_data, member)
         assert League.objects.get(id=1).name == "푸파대회"
+        assert League.objects.get(id=1).max_round == 32
+        assert League.objects.get(id=1).in_progress_round == 4
         assert LeagueSport.objects.get(league_id=1).sport_id == 2
 
     @pytest.mark.django_db
@@ -54,7 +60,9 @@ class TestLeague:
             "leagueData": {
                 "name": "푸파대회",
                 "startAt": "2024-03-20 00:00:00",
-                "endAt": "2024-03-25 00:00:00"
+                "endAt": "2024-03-25 00:00:00",
+                "maxRound": 32,
+                "inProgressRound": 4
             },
             "sportData": [
                 2
