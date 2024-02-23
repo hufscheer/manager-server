@@ -21,7 +21,8 @@ class TeamContainer(containers.DeclarativeContainer):
     team_service = providers.Factory(
         TeamService,
         team_repository=team_repository,
-        s3_conn=S3Connect()
+        s3_conn=S3Connect(),
+        sqs_conn=SqsConnect(),
     )
     team_register_service = providers.Factory(
         TeamRegisterService,
@@ -48,7 +49,8 @@ class TeamContainer(containers.DeclarativeContainer):
     test_team_service = providers.Factory(
         TeamService,
         team_repository=team_repository,
-        s3_conn=FakeS3Connect()
+        s3_conn=FakeS3Connect(),
+        sqs_conn=FakeSqsConnect(),
     )
     test_team_register_service = providers.Factory(
         TeamRegisterService,

@@ -1,0 +1,1 @@
+from .fixture import load_sql_fixture
