@@ -2,13 +2,13 @@ from team.domain import TeamRepository
 from accounts.domain import Member
 from django.core.exceptions import PermissionDenied
 from team.serializers import TeamChangeRequestSerializer, TeamSaveSerializer
-from utils import S3Connect
+from utils.s3 import AbstractS3Connect
 from team.domain import LeagueTeam
 
 class TeamService:
-    def __init__(self, team_repository: TeamRepository):
+    def __init__(self, team_repository: TeamRepository, s3_conn: AbstractS3Connect):
         self._team_repository = team_repository
-        self._s3_conn = S3Connect()
+        self._s3_conn = s3_conn
 
     def change_team(self, request_data, team_id: int, user_data: Member):
         team: LeagueTeam = self._team_repository.find_team_with_league_by_id(team_id)
