@@ -31,12 +31,12 @@ VALUES  (1, '미컴과', 'image.url', 1, 1, 1),
 INSERT INTO league_team_players (id, name, description, number, league_team_id)
 VALUES  (1, '미컴선수1', NULL, 11, 1),
         (2, '미컴선수2', NULL, 22, 1),
-        (3, '영어선수1', NULL, 33, 1),
-        (4, '영어선수2', NULL, 11, 1),
-        (5, '아랍선수1', NULL, 22, 1),
-        (6, '아랍선수2', NULL, 11, 1),
-        (7, '인도선수1', NULL, 22, 1),
-        (8, '인도선수2', NULL, 44, 1);
+        (3, '영어선수1', NULL, 33, 2),
+        (4, '영어선수2', NULL, 11, 2),
+        (5, '아랍선수1', NULL, 22, 3),
+        (6, '아랍선수2', NULL, 11, 3),
+        (7, '인도선수1', NULL, 22, 4),
+        (8, '인도선수2', NULL, 44, 4);
 
 INSERT INTO games (id, name, start_time, video_id, quarter_changed_at, game_quarter, state, league_id, manager_id, sport_id)
 VALUES  (1, '준결승', '2024-03-21 14:00:00', 'video.com', '2024-03-21 13:50:00', '후반전', 'FINISHED', 1, 1, 1),
@@ -52,13 +52,13 @@ VALUES  (1, 1, 0, 3),
         (3, 4, 0, 0);
 
 INSERT INTO lineup_players (id, game_team_id, name, description, number, is_captain)
-VALUES  (1, 1, '미컴선수1', NULL, 11, 1),
+VALUES  (1, 1, '미컴선수1', NULL, 11, 0),
         (2, 1, '미컴선수2', NULL, 22, 1),
-        (3, 1, '영어선수1', NULL, 33, 1),
+        (3, 1, '영어선수1', NULL, 33, 0),
         (4, 1, '영어선수2', NULL, 11, 1),
-        (5, 2, '아랍선수1', NULL, 22, 1),
+        (5, 2, '아랍선수1', NULL, 22, 0),
         (6, 2, '아랍선수2', NULL, 11, 1),
-        (7, 2, '인도선수1', NULL, 22, 1),
+        (7, 2, '인도선수1', NULL, 22, 0),
         (8, 2, '인도선수2', NULL, 44, 1),
         (9, 3, '미컴선수1', NULL, 11, 1),
         (10, 3, '미컴선수2', NULL, 22, 1),
