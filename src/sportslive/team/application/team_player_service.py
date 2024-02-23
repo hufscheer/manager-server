@@ -18,7 +18,8 @@ class TeamPlayerService:
             team_player = LeagueTeamPlayer(
                     league_team=team,
                     name=team_player_data.get('name'),
-                    description=team_player_data.get('description')
+                    description=team_player_data.get('description'),
+                    number=team_player_data.get('number')
                 )
             self._team_player_repository.save_team_player(team_player)
 
@@ -30,10 +31,11 @@ class TeamPlayerService:
 
         team_player.name = team_player_data.get('name')
         team_player.description = team_player_data.get('description')
+        team_player.number = team_player_data.get('number')
         self._team_player_repository.save_team_player(team_player)
 
     def delete_team_player(self, team_player_id: int, user_data: Member):
         team_player: LeagueTeamPlayer = self._team_player_repository.find_team_player_with_team_by_id(team_player_id)
-        if team_player.team.manger.id != user_data.id:
+        if team_player.league_team.manager_id != user_data.id:
             raise PermissionDenied
         self._team_player_repository.delete_team_player(team_player)
