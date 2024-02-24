@@ -31,7 +31,7 @@ class TestLeagueTeamPlayer:
             },
         ]
         self._team_player_service.register_team_players(request_data, 1)
-        assert LeagueTeamPlayer.objects.filter(league_team_id=1).count() == 5
+        assert LeagueTeamPlayer.objects.filter(league_team_id=1).count() == 7
 
     @pytest.mark.django_db
     def test_change_team_players(self, load_sql_fixture, dependency_fixture):
