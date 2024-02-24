@@ -5,7 +5,7 @@ class LineupPlayerGetSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = LineupPlayer
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'number', 'is_captain')
 
 class GameTeamInfoSerializer(serializers.ModelSerializer):
     gameTeamId = serializers.IntegerField(source='id')

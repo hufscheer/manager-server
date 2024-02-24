@@ -29,7 +29,7 @@ class GameService:
 
     def change_game(self, game_id: int, request_data, user_data: Member):
         game: Game = self._game_repository.find_game_by_id(game_id)
-        if game.manger_id != user_data.id:
+        if game.manager_id != user_data.id:
             raise PermissionDenied
         game_save_serializer = GameChangeSerializer(game, data=request_data)
         game_save_serializer.is_valid(raise_exception=True)
@@ -43,7 +43,7 @@ class GameService:
     def _create_game_object(self, game_data: dict, user_data: Member, league: League) -> Game:
         return Game(
             sport_id=game_data.get('sport_id'),
-            administrator=user_data,
+            manager=user_data,
             league=league,
             name=game_data.get('name'),
             start_time=game_data.get('start_time'),
@@ -51,7 +51,7 @@ class GameService:
         )
     
     def _create_game_team_object(self, team_id: int, game: Game) -> GameTeam:
-        return GameTeam(game=game, team_id=team_id)
+        return GameTeam(game=game, league_team_id=team_id)
     
     class _ExtraGameInfoDTO:
         def __init__(self, sport_name: str, state: str):

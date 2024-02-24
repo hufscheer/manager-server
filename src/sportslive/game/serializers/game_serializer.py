@@ -45,4 +45,4 @@ class GameInfoResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter')
+        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter', 'state')
