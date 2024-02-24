@@ -9,6 +9,8 @@ class League(models.Model):
     is_deleted = models.BooleanField(default=False)
     start_at = models.DateTimeField()
     end_at = models.DateTimeField()
+    max_round = models.IntegerField(null=True)
+    in_progress_round = models.IntegerField(null=True)
 
     class Meta:
         db_table = 'leagues'

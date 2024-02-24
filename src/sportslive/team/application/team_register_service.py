@@ -1,25 +1,34 @@
 from team.domain import TeamRepository
 from accounts.domain import Member
-from team.serializers import TeamRegisterRequestSerializer
-from utils import S3Connect, SqsConnect
 from team.domain import LeagueTeam
 from league.domain import LeagueRepository
 from django.db import transaction
 from utils.exceptions.team_exceptions import S3UploadError, TeamSaveError, EmptyLogoError
-from team.dto import TeamRequestDTO, TeamMakeDTO
+from team.dto import TeamMakeDTO
 from league.domain import League
+from utils.s3 import AbstractS3Connect
+from utils.sqs import AbstractSqsConnect
+from team.serializers import TeamRegisterRequestSerializer
 
 class TeamRegisterService:
-    def __init__(self, team_repository: TeamRepository, league_repository: LeagueRepository):
+    def __init__(
+            self, team_repository: TeamRepository,
+            league_repository: LeagueRepository,
+            s3_conn: AbstractS3Connect,
+            sqs_conn: AbstractSqsConnect,
+            team_request_dto
+        ):
         self._team_repository = team_repository
         self._league_repository = league_repository
-        self._s3_conn = S3Connect()
+        self._s3_conn = s3_conn
+        self._sqs_conn = sqs_conn
+        self._team_request_dto = team_request_dto
         self._uploaded_logo_urls = []
         self._logo_uploaded_teams_keys = []
 
     def register_teams(self, request_data, league_id: int, user_data: Member):
         league = self._league_repository.find_league_by_id(league_id)
-        team_data = TeamRequestDTO(request_data)
+        team_data = self._team_request_dto(request_data)
         teams_names = team_data.names
         teams_logos = team_data.logos
         self._check_logo_str(teams_logos)
@@ -29,7 +38,7 @@ class TeamRegisterService:
         self._send_sqs_message()
 
     def _upload_logo_on_s3(self, teams_logos, teams_names, league: League):
-         # 로고들을 S3에 업로드 하는 로직
+        # 로고들을 S3에 업로드 하는 로직
         s3_upload_error_teams = []
         for i, team_logo in enumerate(teams_logos):
             team_name = teams_names[i]
@@ -63,7 +72,7 @@ class TeamRegisterService:
             raise TeamSaveError(save_error_teams)
 
     def _send_sqs_message(self):
-        sqs_conn = SqsConnect()
+        sqs_conn = self._sqs_conn
         for logo_uploaded_teams_key in self._logo_uploaded_teams_keys:
             sqs_conn.send_message_to_sqs(logo_uploaded_teams_key)
 

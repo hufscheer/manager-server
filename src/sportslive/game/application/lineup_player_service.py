@@ -50,6 +50,8 @@ class LineupPlayerService:
         lineup_player = LineupPlayer(
             game_team=game_team,
             name=lineup_player_data.get('name'),
-            description=lineup_player_data.get('description')
+            description=lineup_player_data.get('description'),
+            number=lineup_player_data.get('number'),
+            is_captain=lineup_player_data.get('is_captain'),
         )
         self._game_repository.save_lineup_player(lineup_player)

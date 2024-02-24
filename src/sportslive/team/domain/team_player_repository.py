@@ -12,7 +12,7 @@ class TeamPlayerRepository:
         team_player.delete()
 
     def find_team_player_with_team_by_id(self, team_player_id: int):
-        return get_object_or_404(LeagueTeamPlayer.objects.select_related('team'), id=team_player_id)
+        return get_object_or_404(LeagueTeamPlayer.objects.select_related('league_team'), id=team_player_id)
     
     def find_team_player_by_team_id(self, team_id: int):
         return get_list_or_404(LeagueTeamPlayer, league_team_id=team_id)

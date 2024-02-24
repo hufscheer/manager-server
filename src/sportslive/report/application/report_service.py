@@ -25,9 +25,9 @@ class ReportService:
     def block_cheer_talk(self, cheer_talk_id: int):
         cheer_talk: CheerTalk = self._cheer_talk_repository.find_cheer_talk_by_id(cheer_talk_id)
 
-        if cheer_talk.is_blocked == b'\x00':
+        if cheer_talk.is_bool_blocked == False:
             cheer_talk.is_blocked = True
-        elif cheer_talk.is_blocked == b'\x01':
+        elif cheer_talk.is_bool_blocked == True:
             cheer_talk.is_blocked = False
         self._cheer_talk_repository.save_cheer_talk(cheer_talk)
 

@@ -12,4 +12,5 @@ class TeamSaveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TeamChangeRequestSerializer(TeamRegisterRequestSerializer):
-    pass
+    name = serializers.ListField(child=serializers.CharField())
+    logo = serializers.ListField(child=serializers.ImageField())

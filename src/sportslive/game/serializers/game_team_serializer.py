@@ -14,7 +14,7 @@ class LineupPlayerRequestSerialzier(serializers.ModelSerializer):
     
     class Meta:
         model = LineupPlayer
-        fields = ('name', 'description',)
+        fields = ('name', 'description', 'number', 'is_captain')
 
 class LineupPlayerSaveSerialzier(serializers.ModelSerializer):
 
@@ -27,7 +27,7 @@ class LineupPlayerChangeSerialzier(serializers.ModelSerializer):
 
     class Meta:
         model = LineupPlayer
-        fields = ('id', 'name', 'description',)
+        fields = ('id', 'name', 'description', 'number', 'is_captain')
 
 class _GameTeamScoreMappingSerializer(serializers.Serializer):
     id = serializers.IntegerField()

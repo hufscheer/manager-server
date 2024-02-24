@@ -7,5 +7,9 @@ class CheerTalk(models.Model):
     is_blocked = models.BooleanField(default=False)
     game_team_id = models.BigIntegerField()
 
+    @property
+    def is_bool_blocked(self):
+        return self.is_blocked == b'\x01'
+
     class Meta:
         db_table = 'cheer_talks'
