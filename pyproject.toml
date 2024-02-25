@@ -21,6 +21,7 @@ pillow = "^10.1.0"
 drf-yasg = "^1.21.7"
 pytest = "^8.0.1"
 pytest-django = "^4.8.0"
+coverage = "^7.4.3"
 
 
 [build-system]
