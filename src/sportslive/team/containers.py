@@ -10,7 +10,6 @@ from team.application import (
 from league.domain import LeagueRepository
 from utils.s3 import S3Connect, FakeS3Connect
 from utils.sqs import SqsConnect, FakeSqsConnect
-from team.serializers import TeamRegisterRequestSerializer
 from team.dto import TeamRequestDTO, FakeTeamRequestDTO
 
 class TeamContainer(containers.DeclarativeContainer):
