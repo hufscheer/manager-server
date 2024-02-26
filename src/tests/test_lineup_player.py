@@ -10,6 +10,12 @@ class TestLineupPlayer:
     @pytest.fixture
     def dependency_fixture(self):
         self._lineup_player_service = GameContainer.lineup_player_service()
+        self._game_team_get_serivice = GameContainer.game_team_get_serivice()
+
+    @pytest.mark.django_db
+    def test_get_all_lineup_players(self, load_sql_fixture, dependency_fixture):
+        response = self._game_team_get_serivice.get_all_lineup_players(1)
+        assert len(response) == 2
 
     @pytest.mark.django_db
     def test_register_lineup_player(self, load_sql_fixture, dependency_fixture):
