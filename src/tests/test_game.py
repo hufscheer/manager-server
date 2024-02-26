@@ -10,6 +10,17 @@ class TestGame:
     @pytest.fixture
     def dependency_fixture(self):
         self._game_service = GameContainer.game_service()
+        self._game_team_get_serivice = GameContainer.game_team_get_serivice()
+
+    @pytest.mark.django_db
+    def test_get_game_info(self, load_sql_fixture, dependency_fixture):
+        response = self._game_service.get_game_info(1)
+        assert response.get('gameName') == '준결승'
+
+    @pytest.mark.django_db
+    def test_get_game_teams_info(self, load_sql_fixture, dependency_fixture):
+        response = self._game_team_get_serivice.get_game_teams_info(1)
+        assert len(response) == 2
 
     @pytest.mark.django_db
     def test_create_game(self, load_sql_fixture, dependency_fixture):
