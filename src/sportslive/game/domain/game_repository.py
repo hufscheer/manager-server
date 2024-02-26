@@ -23,7 +23,7 @@ class GameRepository:
                     )
     def find_game_teams_with_team_by_game_id(self, game_id: int):
         return get_list_or_404(
-            GameTeam.objects.select_related('team').filter(game_id=game_id)
+            GameTeam.objects.select_related('league_team').filter(game_id=game_id)
         )
 
     def save_lineup_player(self, lineup_player: LineupPlayer):
