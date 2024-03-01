@@ -1,1 +1,1 @@
-from .record_view import RecordView
+from .record_create_view import RecordCreateView
