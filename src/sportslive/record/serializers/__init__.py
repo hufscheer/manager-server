@@ -1,1 +1,1 @@
-from .record_serializer import RecordRequestSerializer
+from .record_serializer import ScoreRecordRequestSerializer, ReplacementRecordRequestSerializer
