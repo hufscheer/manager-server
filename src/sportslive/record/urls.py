@@ -1,8 +1,8 @@
 from django.urls import path
-from record.presentation import RecordView
+from record.presentation import RecordCreateView
 
 app_name = 'record'
 
 urlpatterns = [
-    path('<int:game_id>/', RecordView.as_view())
+    path('<int:game_id>/<str:record_type>/create/', RecordCreateView.as_view())
 ]
