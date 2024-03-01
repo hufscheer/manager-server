@@ -12,4 +12,4 @@ class SportsQuarterResponseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Quarter
-        fields = ('name',)
+        fields = ('id', 'name',)
