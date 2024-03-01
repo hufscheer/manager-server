@@ -1,5 +1,4 @@
-from record.domain import Record
 
 class RecordRepository:
-    def save_record(self, record: Record):
+    def save_record(self, record):
         record.save()
