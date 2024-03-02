@@ -11,7 +11,7 @@ class Record(models.Model):
     game = models.ForeignKey(Game, models.DO_NOTHING)
     game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
     recorded_quarter = models.ForeignKey(Quarter, models.DO_NOTHING)
-    recorded_at = models.DateTimeField(auto_now_add=True)
+    recorded_at = models.IntegerField()
     record_type = models.CharField(max_length=255, choices=RECORD_TYPE_CHOICES, null=True)
 
     class Meta:
