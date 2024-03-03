@@ -14,19 +14,22 @@ class TestRecord:
     @pytest.mark.django_db
     def test_create_score_record(self, load_sql_fixture, dependency_fixture):
         request_data = {
+            "recordedAt": '2024-03-22 14:07:24',
             "gameTeamId": 5,
-            "recordedQuarterId": 1,
             "scoreLineupPlayerId": 9,
+            "recordedQuarterId": 1,
             "score": 1
         }
         self._record_create_service.create_record(3, 'score', request_data)
-
+        print(Record.objects.get(id=1).recorded_at)
         assert Record.objects.filter().order_by('-id').first().recorded_quarter_id == 1
+        assert Record.objects.filter().order_by('-id').first().recorded_at == 17
         assert ScoreRecord.objects.filter().order_by('-id').first().score == 1
 
     @pytest.mark.django_db
     def test_create_replacement_record(self, load_sql_fixture, dependency_fixture):
         request_data = {
+            "recordedAt": '2024-03-22 14:50:24',
             "gameTeamId": 5,
             "recordedQuarterId": 2,
             "originLineupPlayerId": 9,
@@ -43,4 +46,4 @@ class TestRecord:
         request_data = {
         }
         with pytest.raises(NotValidRecordTypeError):
-            assert self._record_create_service.create_record(3, 'timeout', request_data)
+            assert self._record_create_service.create_record(3, 'unknown', request_data)
