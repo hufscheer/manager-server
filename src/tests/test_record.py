@@ -105,3 +105,17 @@ class TestRecord:
 
         assert ReplacementRecord.objects.get(id=1).origin_lineup_player_id == 12
         assert ReplacementRecord.objects.get(id=1).replaced_lineup_player_id == 11
+
+    @pytest.mark.django_db
+    def test_delete_record(self, load_sql_fixture, dependency_fixture):
+        """
+        score 타임라인 하나를 삭제한다
+        """
+        self._record_service.delete_record(1, 1, 'score')
+        self._record_service.delete_record(2, 2, 'score')
+
+        assert Record.objects.filter(id=1).exists() == False
+        assert ScoreRecord.objects.filter(id=1).exists() == False
+        assert Record.objects.filter(id=2).exists() == False
+        assert ScoreRecord.objects.filter(id=2).exists() == False
+        assert GameTeam.objects.get(id=5).score == 0
