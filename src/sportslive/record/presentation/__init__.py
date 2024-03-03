@@ -1,2 +1,3 @@
 from .record_create_view import RecordCreateView
 from .record_change_view import RecordChangeView
+from .record_delete_view import RecordDeleteView
