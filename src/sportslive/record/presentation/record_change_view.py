@@ -38,4 +38,4 @@ class RecordChangeView(APIView):
         }
         """
         self._record_service.change_record(record_id, extra_record_id, record_type, request.data)
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_200_OK)
