@@ -43,14 +43,14 @@ VALUES  (1, '미컴선수1', NULL, 11, 1),
 INSERT INTO games (id, name, start_time, video_id, quarter_changed_at, game_quarter, state, league_id, manager_id, sport_id)
 VALUES  (1, '준결승', '2024-03-21 14:00:00', 'video.com', '2024-03-21 13:50:00', '후반전', 'FINISHED', 1, 1, 1),
         (2, '준결승', '2024-03-21 14:00:00', 'video.com', '2024-03-21 13:50:00', '후반전', 'FINISHED', 1, 1, 1),
-        (3, '결승', '2024-03-22 14:00:00', NULL, '2024-03-22 13:50:00', '시작 전', 'SCHEDULED', 1, 1, 1);
+        (3, '결승', '2024-03-22 14:00:00', NULL, '2024-03-22 13:50:00', '전반전', 'PLAYING', 1, 1, 1);
 
 INSERT INTO game_teams (game_id, league_team_id, cheer_count, score)
 VALUES  (1, 1, 0, 3),
         (1, 2, 0, 0),
         (2, 3, 0, 0),
         (2, 4, 0, 2),
-        (3, 1, 0, 0),
+        (3, 1, 0, 2),
         (3, 4, 0, 0);
 
 INSERT INTO lineup_players (id, game_team_id, name, description, number, is_captain)
@@ -67,7 +67,17 @@ VALUES  (1, 1, '미컴선수1', NULL, 11, 0),
         (11, 6, '인도선수1', NULL, 22, 1),
         (12, 6, '인도선수2', NULL, 44, 1);
 
---record 필요
+INSERT INTO records (id, record_type, game_id, game_team_id, recorded_quarter_id, recorded_at)
+VALUES  (1, 'score', 3, 5, 1, 31),
+        (2, 'score', 3, 5, 1, 44),
+        (3, 'replacement', 3, 6, 2, 3);
+
+INSERT INTO score_records (id, score, lineup_player_id, record_id)
+VALUES (1, 1, 9, 1),
+        (2, 1, 9, 2);
+
+INSERT INTO replacement_records (id, origin_lineup_player_id, replaced_lineup_player_id ,record_id)
+VALUES (1, 11, 12, 3);
 
 INSERT INTO cheer_talks (id, created_at, content, is_blocked, game_team_id)
 VALUES  (1, '2023-11-11 00:00:00', '아직 신고안된 댓글이야', false, 1);

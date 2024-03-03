@@ -5,9 +5,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from record.containers import RecordContainer
 from drf_yasg.utils import swagger_auto_schema
-from record.serializers import RecordRequestSerializer
 
-class RecordView(APIView):
+class RecordDeleteView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
@@ -15,10 +14,10 @@ class RecordView(APIView):
         super().__init__(*args, **kwargs)
         self._record_service = RecordContainer.record_service()
 
-    @swagger_auto_schema(request_body=RecordRequestSerializer, responses={"201": ""})
-    def post(self, request, game_id: int):
+    @swagger_auto_schema(responses={"204": ""})
+    def put(self, request, record_id: int, extra_record_id: int, record_type: str):
         """
-        타임 라인 생성 API
+        타임 라인 삭제 API
         """
-        self._record_service.create_record(game_id, request.data)
-        return Response(status=status.HTTP_201_CREATED)
+        self._record_service.delete_record(record_id, extra_record_id, record_type)
+        return Response(status=status.HTTP_204_NO_CONTENT)
