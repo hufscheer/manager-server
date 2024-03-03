@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from record.domain import Record, ReplacementRecord, ScoreRecord
+from typing import Union
 
 class RecordRepository:
-    def save_record(self, record: Record):
+    def save_record(self, record: Union[Record, ReplacementRecord, ScoreRecord]):
         record.save()
 
     def find_record_by_id(self, record_id: int):
@@ -16,3 +17,6 @@ class RecordRepository:
     
     def find_replacement_record_by_id(self, replaement_record_id: int):
         return get_object_or_404(ReplacementRecord, id=replaement_record_id)
+    
+    def delete_record(self, record: Union[Record, ReplacementRecord, ScoreRecord]):
+        return record.delete()
