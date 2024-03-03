@@ -1,6 +1,6 @@
 from record.domain import RecordRepository, Record, ScoreRecord, ReplacementRecord
 from record.serializers import ScoreRecordRequestSerializer, ReplacementRecordRequestSerializer
-from game.domain import GameRepository, GameTeam
+from game.domain import GameRepository, GameTeam, Game
 from datetime import datetime
 from utils.exceptions.record_exception import NotValidRecordTypeError
 
@@ -23,24 +23,25 @@ class RecordCreateService:
         record_data: dict = serializer.validated_data
         game_team_id: int = record_data.get('game_team_id')
         game_team: GameTeam = self._game_repository.find_game_team_by_id(game_team_id)
-
-        new_record = self._create_and_save_record_object(game_team, record_data, game_id)
+        game: Game = self._game_repository.find_game_by_id(game_id)
+        new_record = self._create_and_save_record_object(game_team, record_data, game_id, game)
 
         if record_type == "score":
             self._create_and_save_score_record_object(game_team, new_record, record_data)
         elif record_type == "replacement":
             self._create_and_save_replacement_record_object(new_record, record_data)
 
-    def _create_and_save_record_object(self, game_team: GameTeam, record_data, game_id) -> Record:
-        recorded_quarter_id=record_data.get('recorded_quarter_id')
-        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, 'score')
+    def _create_and_save_record_object(self, game_team: GameTeam, record_data, game_id: int, game: Game) -> Record:
+        datetime_recorded_at = record_data.get('recorded_at')
+        int_recorded_at = self._make_integer_recorded_at(datetime_recorded_at, game)
+        recorded_quarter_id = record_data.get('recorded_quarter_id')
+        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, 'score', int_recorded_at)
         self._record_repository.save_record(new_record)
         return new_record
     
     def _create_and_save_score_record_object(self, game_team: GameTeam, new_record: Record, record_data):
         score = record_data.get('score')
         self._change_game_team_score(game_team, score)
-
         score_lineup_player_id = record_data.get('score_lineup_player_id')
         new_score_record = self._create_score_record_object(new_record, score_lineup_player_id, score)
         self._record_repository.save_record(new_score_record)
@@ -55,13 +56,18 @@ class RecordCreateService:
         game_team.score += score
         self._game_repository.save_game_team(game_team)
     
-    def _create_new_record_object(self, game_id: int, game_team: GameTeam, recorded_quarter_id: int, record_type: str) -> Record:
+    def _make_integer_recorded_at(self, datetime_recorded_at, game: Game) -> int:
+        recorded_at_diff = datetime_recorded_at - game.quarter_changed_at
+        print(datetime_recorded_at, game.quarter_changed_at)
+        return recorded_at_diff.seconds // 60
+
+    def _create_new_record_object(self, game_id: int, game_team: GameTeam, recorded_quarter_id: int, record_type: str, recorded_at: int) -> Record:
         return Record(
             game_id=game_id,
             game_team=game_team,
             recorded_quarter_id=recorded_quarter_id,
             record_type=record_type,
-            recorded_at=datetime.now()
+            recorded_at=recorded_at
         )
     
     def _create_score_record_object(self, record: Record, lineup_player_id: int, score: int) -> ScoreRecord:
