@@ -24,6 +24,7 @@ class RecordCreateView(APIView):
             "gameTeamId": int,
             "recordedQuarterId": int,
             "scoreLineupPlayerId": int,
+            "recordedQuarterId": int,
             "score": int
         }
         record type이 "replacement" 일 경우:
@@ -31,6 +32,7 @@ class RecordCreateView(APIView):
             "gameTeamId": int,
             "recordedQuarterId": int,
             "originLineupPlayerId": int,
+            "recordedQuarterId": int,
             "replacedLineupPlayerId": int
         }
         """
