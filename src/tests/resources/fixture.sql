@@ -43,7 +43,7 @@ VALUES  (1, '미컴선수1', NULL, 11, 1),
 INSERT INTO games (id, name, start_time, video_id, quarter_changed_at, game_quarter, state, league_id, manager_id, sport_id)
 VALUES  (1, '준결승', '2024-03-21 14:00:00', 'video.com', '2024-03-21 13:50:00', '후반전', 'FINISHED', 1, 1, 1),
         (2, '준결승', '2024-03-21 14:00:00', 'video.com', '2024-03-21 13:50:00', '후반전', 'FINISHED', 1, 1, 1),
-        (3, '결승', '2024-03-22 14:00:00', NULL, '2024-03-22 13:50:00', '시작 전', 'SCHEDULED', 1, 1, 1);
+        (3, '결승', '2024-03-22 14:00:00', NULL, '2024-03-22 13:50:00', '전반전', 'PLAYING', 1, 1, 1);
 
 INSERT INTO game_teams (game_id, league_team_id, cheer_count, score)
 VALUES  (1, 1, 0, 3),
