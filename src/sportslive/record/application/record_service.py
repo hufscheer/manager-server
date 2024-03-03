@@ -9,17 +9,7 @@ class RecordService:
         self._game_repository = game_repository
 
     def change_record(self, record_id: int, extra_record_id: int, record_type: str, request_data):
-        record_type_serializer_mapping = {
-            "score": ScoreRecordChangeRequestSerializer,
-            "replacement": ReplacementRecordChangeRequestSerializer
-        }
-        record_request_serializer = record_type_serializer_mapping.get(record_type, None)
-        if not record_request_serializer:
-            raise NotValidRecordTypeError
-
-        serializer = record_request_serializer(data=request_data)
-        serializer.is_valid(raise_exception=True)
-        record_data: dict = serializer.validated_data
+        record_data = self._get_record_data(record_type, request_data)
         game_team_id: int = record_data.get('game_team_id')
         game_team: GameTeam = self._game_repository.find_game_team_by_id(game_team_id)
 
@@ -30,6 +20,34 @@ class RecordService:
             self._change_and_save_score_record_object(game_team, extra_record_id, record_data)
         elif record_type == "replacement":
             self._change_and_save_replacement_record_object(extra_record_id, record_data)
+
+    def delete_record(self, record_id: int, extra_record_id: int, record_type: str):
+        target_record: Record = self._record_repository.find_record_by_id(record_id)
+        target_extra_record = None
+        
+        if record_type == "score":
+            target_extra_record = self._record_repository.find_score_record_by_id(extra_record_id)
+            game_team: GameTeam = self._game_repository.find_game_team_by_id(target_record.game_team_id)
+            self._change_game_team_score_when_delete(game_team, target_extra_record)
+    
+        elif record_type == "replacement":
+            target_extra_record = self._record_repository.find_replacement_record_by_id(extra_record_id)
+            
+        self._record_repository.delete_record(target_extra_record)
+        self._record_repository.delete_record(target_record)
+
+    def _get_record_data(self, record_type: str, request_data: dict):
+        record_type_serializer_mapping = {
+            "score": ScoreRecordChangeRequestSerializer,
+            "replacement": ReplacementRecordChangeRequestSerializer
+        }
+        record_request_serializer = record_type_serializer_mapping.get(record_type, None)
+        if not record_request_serializer:
+            raise NotValidRecordTypeError
+
+        serializer = record_request_serializer(data=request_data)
+        serializer.is_valid(raise_exception=True)
+        return serializer.validated_data
 
     def _change_and_save_record_object(self, record_data: dict, target_record: Record):
         target_record.game_team_id = record_data.get('game_team_id')
@@ -55,4 +73,8 @@ class RecordService:
     def _change_game_team_score(self, game_team: GameTeam, target_score_record: ScoreRecord, score: int):
         game_team.score -= target_score_record.score
         game_team.score += score
+        self._game_repository.save_game_team(game_team)
+
+    def _change_game_team_score_when_delete(self, game_team: GameTeam, score_record: ScoreRecord):
+        game_team.score -= score_record.score
         self._game_repository.save_game_team(game_team)
