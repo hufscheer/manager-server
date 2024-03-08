@@ -7,6 +7,8 @@ from game.serializers import (
                 )
 from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
+from datetime import datetime
+from pytz import timezone
 
 class GameService:
     def __init__(self, game_repository: GameRepository, league_repository: LeagueRepository, *args, **kwargs):
@@ -31,9 +33,11 @@ class GameService:
         game: Game = self._game_repository.find_game_by_id(game_id)
         if game.manager_id != user_data.id:
             raise PermissionDenied
-        game_save_serializer = GameChangeSerializer(game, data=request_data)
-        game_save_serializer.is_valid(raise_exception=True)
-        game_save_serializer.save()
+        
+        game_change_serializer = GameChangeSerializer(game, data=request_data)
+        game_change_serializer.is_valid(raise_exception=True)
+        game_change_data = game_change_serializer.validated_data
+        self._change_game_object(game, game_change_data)
 
     def get_game_info(self, game_id: int):
         game: Game = self._game_repository.find_game_with_sport_by_id(game_id)
@@ -48,8 +52,21 @@ class GameService:
             name=game_data.get('name'),
             start_time=game_data.get('start_time'),
             video_id=game_data.get('video_id', None),
+            round=game_data.get('round'),
+            quarter_changed_at=datetime.now(timezone('Asia/Seoul'))
         )
     
+    def _change_game_object(self, game: Game, game_change_data: dict):
+        game.sport_id = game_change_data.get('sport_id')
+        game.start_time = game_change_data.get('start_time')
+        game.video_id = game_change_data.get('video_id')
+        game.game_quarter = game_change_data.get('game_quarter')
+        game.name = game_change_data.get('name')
+        game.state = game_change_data.get('state')
+        game.round = game_change_data.get('round')
+        game.quarter_changed_at = datetime.now(timezone('Asia/Seoul'))
+        self._game_repository.save_game(game)
+
     def _create_game_team_object(self, team_id: int, game: Game) -> GameTeam:
         return GameTeam(game=game, league_team_id=team_id)
     
