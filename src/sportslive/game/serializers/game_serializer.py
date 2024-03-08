@@ -8,10 +8,11 @@ class GameRequestSerializer(serializers.ModelSerializer):
     startTime = serializers.DateTimeField(source='start_time')
     videoId = serializers.CharField(allow_null=True, required=False, source='video_id')
     teamIds = serializers.ListField(child=serializers.IntegerField(), source='team_ids')
+    gameName = serializers.CharField(source='name')
 
     class Meta:
         model = Game
-        fields = ('sportsId', 'startTime', 'name', 'videoId', 'teamIds')
+        fields = ('sportsId', 'startTime', 'gameName', 'videoId', 'teamIds', 'round')
 
 class GameSaveSerializer(serializers.ModelSerializer):
     video_id = serializers.CharField(allow_null=True, required=False)
@@ -21,12 +22,15 @@ class GameSaveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class GameChangeSerializer(GameRequestSerializer):
+    sportsId = serializers.IntegerField(source='sport_id')
+    startTime = serializers.DateTimeField(source='start_time')
+    videoId = serializers.CharField(allow_null=True, required=False, source='video_id')
     gameQuarter = serializers.CharField(source='game_quarter')
     gameName = serializers.CharField(source='name')
 
     class Meta:
         model = Game
-        fields = ('sportsId', 'startTime', 'gameName', 'videoId', 'gameQuarter', 'state',)
+        fields = ('sportsId', 'startTime', 'gameName', 'videoId', 'gameQuarter', 'state', 'round')
 
 class _SportsInfoSerializer(serializers.ModelSerializer):
     sportsId = serializers.IntegerField(source='id')
@@ -45,4 +49,4 @@ class GameInfoResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter', 'state')
+        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter', 'state', 'round')
