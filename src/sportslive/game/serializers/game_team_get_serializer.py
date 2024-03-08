@@ -10,8 +10,8 @@ class LineupPlayerGetSerializer(serializers.ModelSerializer):
 
 class GameTeamInfoSerializer(serializers.ModelSerializer):
     gameTeamId = serializers.IntegerField(source='id')
-    gameTeamName = serializers.CharField(source='team.name')
-    logoImageUrl = serializers.CharField(source='team.logo_image_url')
+    gameTeamName = serializers.CharField(source='league_team.name')
+    logoImageUrl = serializers.CharField(source='league_team.logo_image_url')
     score = serializers.IntegerField()
 
     class Meta:
