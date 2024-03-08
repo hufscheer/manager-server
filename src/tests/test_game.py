@@ -17,16 +17,18 @@ class TestGame:
         request_data = {
             "sportsId": 1,
             "startTime": "2024-03-22 14:00:00",
-            "name": "3위결정전",
+            "gameName": "1경기",
             "teamIds": [
                 2, 3
-            ]
+            ],
+            "round": 16
         }
         self._game_service.create_game(1, request_data, member)
-        assert Game.objects.get(id=4).name == "3위결정전"
+        assert Game.objects.get(id=4).name == "1경기"
         assert Game.objects.get(id=4).video_id == None
         assert Game.objects.get(id=4).game_quarter == "시작 전"
         assert Game.objects.get(id=4).state == "SCHEDULED"
+        assert Game.objects.get(id=4).round == 16
         assert GameTeam.objects.filter(id=7).exists()
         assert GameTeam.objects.filter(id=8).exists()
 
@@ -41,13 +43,14 @@ class TestGame:
             "startTime": "2024-03-22 14:00:00",
             "gameName": "결승",
             "videoId": "video.com",
-            "gameQuarter": "전반전",
-            "state": "PLAYING"
+            "gameQuarter": "후반전",
+            "state": "FINISHED",
+            "round": 2
         }
         self._game_service.change_game(3, request_data, member)
         assert Game.objects.get(id=3).name == "결승"
-        assert Game.objects.get(id=3).game_quarter == "전반전"
-        assert Game.objects.get(id=3).state == "PLAYING"
+        assert Game.objects.get(id=3).game_quarter == "후반전"
+        assert Game.objects.get(id=3).state == "FINISHED"
 
     @pytest.mark.django_db
     def test_fail_change_game(self, load_sql_fixture, dependency_fixture):
