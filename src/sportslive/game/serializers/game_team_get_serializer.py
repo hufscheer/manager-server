@@ -2,10 +2,11 @@ from rest_framework import serializers
 from game.domain import LineupPlayer, GameTeam
 
 class LineupPlayerGetSerializer(serializers.ModelSerializer):
+    isCaptain = serializers.BooleanField(source='is_captain')
     
     class Meta:
         model = LineupPlayer
-        fields = ('id', 'name', 'description', 'number', 'is_captain')
+        fields = ('id', 'name', 'description', 'number', 'isCaptain')
 
 class GameTeamInfoSerializer(serializers.ModelSerializer):
     gameTeamId = serializers.IntegerField(source='id')

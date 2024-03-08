@@ -11,10 +11,11 @@ class GameTeamRequestSerializer(serializers.Serializer):
     teamIds = serializers.ListField(child=serializers.IntegerField(), source='team_ids')
 
 class LineupPlayerRequestSerialzier(serializers.ModelSerializer):
-    
+    isCaptain = serializers.BooleanField(source='is_captain')
+
     class Meta:
         model = LineupPlayer
-        fields = ('name', 'description', 'number', 'is_captain')
+        fields = ('name', 'description', 'number', 'isCaptain')
 
 class LineupPlayerSaveSerialzier(serializers.ModelSerializer):
 
@@ -24,10 +25,11 @@ class LineupPlayerSaveSerialzier(serializers.ModelSerializer):
 
 class LineupPlayerChangeSerialzier(serializers.ModelSerializer):
     id = serializers.IntegerField(allow_null=True, required=False)
-
+    isCaptain = serializers.BooleanField(source='is_captain')
+    
     class Meta:
         model = LineupPlayer
-        fields = ('id', 'name', 'description', 'number', 'is_captain')
+        fields = ('id', 'name', 'description', 'number', 'isCaptain')
 
 class _GameTeamScoreMappingSerializer(serializers.Serializer):
     id = serializers.IntegerField()
