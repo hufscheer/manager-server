@@ -7,6 +7,12 @@ class GameRepository:
     def find_game_by_id(self, game_id):
         return get_object_or_404(Game, id=game_id)
     
+    def find_game_with_manger_by_id(self, game_id: int):
+        return get_object_or_404(Game.objects.select_related('manager'), id=game_id)
+
+    def delete_game(self, game: Game):
+        game.delete()
+    
     def find_game_with_sport_by_id(self, game_id):
         return get_object_or_404(Game.objects.select_related('sport'), id=game_id)
 
