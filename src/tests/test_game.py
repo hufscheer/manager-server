@@ -3,8 +3,8 @@ from accounts.domain.member import Member
 from .fixture import load_sql_fixture
 from game.containers import GameContainer
 from game.domain import Game, GameTeam
+from utils.exceptions.game_exceptions import CantDeleteGameError
 from django.core.exceptions import PermissionDenied
-
 class TestGame:
 
     @pytest.fixture
@@ -24,11 +24,11 @@ class TestGame:
             "round": 16
         }
         self._game_service.create_game(1, request_data, member)
-        assert Game.objects.get(id=4).name == "1경기"
-        assert Game.objects.get(id=4).video_id == None
-        assert Game.objects.get(id=4).game_quarter == "시작 전"
-        assert Game.objects.get(id=4).state == "SCHEDULED"
-        assert Game.objects.get(id=4).round == 16
+        assert Game.objects.get(id=5).name == "1경기"
+        assert Game.objects.get(id=5).video_id == None
+        assert Game.objects.get(id=5).game_quarter == "시작 전"
+        assert Game.objects.get(id=5).state == "SCHEDULED"
+        assert Game.objects.get(id=5).round == 16
         assert GameTeam.objects.filter(id=7).exists()
         assert GameTeam.objects.filter(id=8).exists()
 
@@ -68,3 +68,23 @@ class TestGame:
         }
         with pytest.raises(PermissionDenied):
             self._game_service.change_game(3, request_data, member)
+
+    @pytest.mark.django_db
+    def test_delete_game(self, load_sql_fixture, dependency_fixture):
+        """
+        게임 삭제
+        """
+        member = Member.objects.get(id=1)
+        self._game_service.delete_game(4, member)
+        assert Game.objects.filter(id=4).exists() == False
+        assert GameTeam.objects.filter(game_id=4).exists() == False
+    
+    @pytest.mark.django_db
+    def test_fail_delete_game(self, load_sql_fixture, dependency_fixture):
+        """
+        게임 삭제
+        """
+        member = Member.objects.get(id=1)
+        with pytest.raises(CantDeleteGameError):
+            self._game_service.delete_game(1, member)
+        
