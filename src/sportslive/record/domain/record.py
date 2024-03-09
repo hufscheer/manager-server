@@ -8,8 +8,8 @@ class Record(models.Model):
         ('REPLACEMENT', 'replacement')
     )
     id = models.BigAutoField(primary_key=True)
-    game = models.ForeignKey(Game, models.DO_NOTHING)
-    game_team = models.ForeignKey(GameTeam, models.DO_NOTHING)
+    game = models.ForeignKey(Game, models.CASCADE)
+    game_team = models.ForeignKey(GameTeam, models.CASCADE)
     recorded_quarter = models.ForeignKey(Quarter, models.DO_NOTHING)
     recorded_at = models.IntegerField()
     record_type = models.CharField(max_length=255, choices=RECORD_TYPE_CHOICES, null=True)
@@ -19,8 +19,8 @@ class Record(models.Model):
 
 class ScoreRecord(models.Model):
     id = models.BigAutoField(primary_key=True)
-    record = models.ForeignKey(Record, models.DO_NOTHING)
-    lineup_player = models.ForeignKey(LineupPlayer, models.DO_NOTHING)
+    record = models.ForeignKey(Record, models.CASCADE)
+    lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
     score = models.IntegerField()
 
     class Meta:
@@ -28,9 +28,9 @@ class ScoreRecord(models.Model):
 
 class ReplacementRecord(models.Model):
     id = models.BigAutoField(primary_key=True)
-    record = models.ForeignKey(Record, models.DO_NOTHING)
-    origin_lineup_player = models.ForeignKey(LineupPlayer, models.DO_NOTHING)
-    replaced_lineup_player = models.ForeignKey(LineupPlayer, models.DO_NOTHING)
+    record = models.ForeignKey(Record, models.CASCADE)
+    origin_lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
+    replaced_lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
     
     class Meta:
         db_table = 'replacement_records'
