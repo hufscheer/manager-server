@@ -15,9 +15,9 @@ INSERT INTO quarters (id, name, sports_id)
 VALUES  (1, '전반전', 1),
         (2, '후반전', 1);
 
-INSERT INTO leagues (id, name, is_deleted, start_at, end_at, manager_id, organization_id)
-VALUES  (1, '외대 월드컵', 0, '2024-03-20 00:00:00', '2024-03-24 00:00:00', 1, 1),
-        (2, '아대 월드컵', 0, '2024-03-20 00:00:00', '2024-03-24 00:00:00', 1, 1);
+INSERT INTO leagues (id, name, is_deleted, start_at, end_at, manager_id, organization_id, max_round, in_progress_round)
+VALUES  (1, '외대 월드컵', 0, '2024-03-20 00:00:00', '2024-03-24 00:00:00', 1, 1, 8, 2),
+        (2, '아대 월드컵', 0, '2024-03-20 00:00:00', '2024-03-24 00:00:00', 1, 1, 16, 16);
 
 INSERT INTO league_sports (id, league_id, sport_id) VALUES (1, 1, 1);
 
