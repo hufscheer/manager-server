@@ -21,13 +21,13 @@ class TestLineupPlayer:
             {
                 "name": "미컴선수3",
                 "number": 55,
-                "is_captain": 0
+                "isCaptain": 0
             },
             {
                 "name": "미컴선수4",
                 "number": 55,
                 "description": "부상",
-                "is_captain": 0
+                "isCaptain": 0
             }
         ]
         self._lineup_player_service.register_lineup_player(5, request_data)
@@ -48,18 +48,18 @@ class TestLineupPlayer:
             {
                 "name": "미컴선수4",
                 "number": 66,
-                "is_captain": 0
+                "isCaptain": 0
             },
             {
                 "name": "미컴선수3",
                 "number": 55,
-                "is_captain": 0
+                "isCaptain": 0
             },
             {
                 "id": 9,
                 "name": "미컴선수1",
                 "number": 11,
-                "is_captain": 1
+                "isCaptain": 1
             }
         ]
         self._lineup_player_service.change_lineup_player(5, request_data)

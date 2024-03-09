@@ -16,7 +16,7 @@ class TestRecord:
     @pytest.mark.django_db
     def test_create_score_record(self, load_sql_fixture, dependency_fixture):
         request_data = {
-            "recordedAt": '2024-03-22 14:07:24',
+            "recordedAt": '2024-03-22 14:17:24',
             "gameTeamId": 5,
             "scoreLineupPlayerId": 9,
             "recordedQuarterId": 1,
