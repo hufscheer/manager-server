@@ -23,3 +23,11 @@ class GameView(APIView):
         """
         self._game_serivce.create_game(league_id, request.data, request.user)
         return Response(status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(responses={"204": ""})
+    def delete(self, request, game_id: int):
+        """
+        게임 삭제 API
+        """
+        self._game_serivce.delete_game(game_id, request.data, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
