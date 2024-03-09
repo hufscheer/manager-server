@@ -16,10 +16,11 @@ class Game(models.Model):
     name = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     video_id = models.CharField(max_length=255, blank=True, null=True)
-    quarter_changed_at = models.DateTimeField(auto_now=True)
+    quarter_changed_at = models.DateTimeField()
     game_quarter = models.CharField(max_length=255, default='시작 전')
     state = models.CharField(max_length=255, choices=GAME_CHOICES, default='SCHEDULED')
-
+    round = models.IntegerField(default=0)
+    
     class Meta:
         db_table = 'games'
 
