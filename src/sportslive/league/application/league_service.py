@@ -1,6 +1,5 @@
 from league.domain import LeagueRepository
 from league.serializers import (
-                    LeagueSerializer,
                     LeagueSportRegistrationSerializer,
                     LeagueSportChangeSerializer,
                     LeagueDeleteSerializer,
@@ -19,11 +18,8 @@ class LeagueService:
         league_sport_serializer.is_valid(raise_exception=True)
         league_sport_data = league_sport_serializer.validated_data
         league_data = league_sport_data.get('league_data')
-        league_data['organization'] = user_data.organization_id
-        league_data['manager'] = user_data.id
-        league_serializer = LeagueSerializer(data=league_data)
-        league_serializer.is_valid(raise_exception=True)
-        league: League = league_serializer.save()
+        league: League = self._create_league_object(league_data, user_data)
+        self._league_repository.save_league(league)
 
         sport_ids: list[int] = league_sport_data.get('sport_data')
         self._register_league_sports(sport_ids=sport_ids, league=league)
@@ -34,21 +30,17 @@ class LeagueService:
         league_sport_serializer.is_valid(raise_exception=True)
         league_sport_data = league_sport_serializer.validated_data
         league_id = league_sport_data.get('league_id')
+        target_league: League = self._league_repository.find_league_by_id(league_id)
         league_data: dict = league_sport_data.get('league_data')
 
-        target_league : League = self._league_repository.find_league_by_id(league_id)
         if target_league.manager != user_data:
             raise PermissionDenied
         
-        league_data['organization'] = user_data.organization_id
-        league_data['manager'] = user_data.id
-        league_serializer = LeagueSerializer(target_league, data=league_data)
-        league_serializer.is_valid(raise_exception=True)
-        league: League = league_serializer.save()
+        self._change_league_object(league_data, target_league)
 
         sport_ids: list[int] = league_sport_data.get('sport_data')
-        self._league_repository.delete_league_sports_by_league_id(league.id)
-        self._register_league_sports(sport_ids=sport_ids, league=league)
+        self._league_repository.delete_league_sports_by_league_id(target_league.id)
+        self._register_league_sports(sport_ids=sport_ids, league=target_league)
     
     def delete_league(self, request_data , user_data: Member):
         league_delete_serializer = LeagueDeleteSerializer(data=request_data)
@@ -66,6 +58,25 @@ class LeagueService:
         target_league.is_deleted = True
         self._league_repository.save_league(target_league, 'is_deleted')
 
+    def _change_league_object(self, league_data: dict, target_league: League):
+        target_league.name = league_data.get('name')
+        target_league.start_at = league_data.get('start_at')
+        target_league.end_at = league_data.get('end_at')
+        target_league.max_round = league_data.get('max_round')
+        target_league.in_progress_round = league_data.get('in_progress_round')
+        self._league_repository.save_league(target_league)
+
+    def _create_league_object(self, league_data: dict, user_data: Member):
+        return League(
+            manager=user_data,
+            organization=user_data.organization,
+            name=league_data.get('name'),
+            start_at=league_data.get('start_at'),
+            end_at=league_data.get('end_at'),
+            max_round=league_data.get('max_round'),
+            in_progress_round=league_data.get('max_round')
+        )
+    
     def _register_league_sports(self, sport_ids: list[int], league: League):
         for sport_id in sport_ids:
             leage_sport = LeagueSport(sport_id=sport_id, league_id=league.id)
