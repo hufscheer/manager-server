@@ -7,11 +7,12 @@ from game.serializers import (
                 )
 from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
+from utils.exceptions.game_exceptions import CantDeleteGameError
 from datetime import datetime
 from pytz import timezone
 
 class GameService:
-    def __init__(self, game_repository: GameRepository, league_repository: LeagueRepository, *args, **kwargs):
+    def __init__(self, game_repository: GameRepository, league_repository: LeagueRepository):
         self._game_repository = game_repository
         self._league_repository = league_repository
 
@@ -33,11 +34,20 @@ class GameService:
         game: Game = self._game_repository.find_game_by_id(game_id)
         if game.manager_id != user_data.id:
             raise PermissionDenied
-        
+
         game_change_serializer = GameChangeSerializer(game, data=request_data)
         game_change_serializer.is_valid(raise_exception=True)
         game_change_data = game_change_serializer.validated_data
         self._change_game_object(game, game_change_data)
+
+    def delete_game(self, game_id: int, user_data: Member):
+        game: Game = self._game_repository.find_game_with_manger_by_id(game_id)
+        if game.manager.organization != user_data.organization:
+            raise PermissionDenied
+        if game.state != 'SCHEDULED':
+            raise CantDeleteGameError
+
+        self._game_repository.delete_game(game)
 
     def get_game_info(self, game_id: int):
         game: Game = self._game_repository.find_game_with_sport_by_id(game_id)
