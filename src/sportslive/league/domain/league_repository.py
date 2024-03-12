@@ -18,4 +18,4 @@ class LeagueRepository:
             league.save()
             
     def get_all_leagues_by_organization_id(self, organization_id: int):
-        return get_list_or_404(League, organization_id=organization_id, is_deleted=False)
+        return League.objects.filter(organization_id=organization_id, is_deleted=False).order_by('-start_at')
