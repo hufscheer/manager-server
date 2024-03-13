@@ -6,6 +6,7 @@ class _GameInfoSerializer(serializers.ModelSerializer):
     leagueName = serializers.CharField(source='game.league.name')
     sportName = serializers.CharField(source='game.sport.name')
     gameName = serializers.CharField(source='game.name')
+    gameRound = serializers.CharField(source='game.round')
 
     class Meta:
         model = GameTeam
