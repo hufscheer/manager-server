@@ -15,9 +15,9 @@ class BlockCheerTalkView(APIView):
         self._report_service = ReportContainer.report_service()
 
     @swagger_auto_schema(responses={"200": ""})
-    def post(self, request, cheer_talk_id: int):
+    def post(self, request, report_id: int):
         """
-        응원톡 블럭 API
+        PENDING 상태인 report를 VALID로 만들고 응원톡을 블럭하거나, VALID인 report를 PENDING으로 만들고 응원톡을 블럭 취소하는 API
         """
-        response = self._report_service.block_cheer_talk(cheer_talk_id)
+        response = self._report_service.block_cheer_talk(report_id)
         return Response(response, status=status.HTTP_200_OK)
