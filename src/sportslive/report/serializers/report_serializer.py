@@ -10,7 +10,7 @@ class _GameInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GameTeam
-        fields = ('leagueName', 'sportName', 'gameName',)
+        fields = ('leagueName', 'sportName', 'gameName', 'gameRound')
 
 class _CheerTalkInfoSerializer(serializers.ModelSerializer):
     cheerTalkId = serializers.IntegerField(source='id')
