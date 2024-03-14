@@ -29,9 +29,12 @@ class TestReport:
     @pytest.mark.django_db
     def test_block_cheer_talk(self, load_sql_fixture, dependency_fixture):
         member = Member.objects.get(id=1)
-        self._report_service.block_cheer_talk(1)
         self._report_service.block_cheer_talk(2)
-        assert CheerTalk.objects.get(id=1).is_blocked == True
+        self._report_service.block_cheer_talk(3)
+        assert Report.objects.get(id=2).state == "VALID"
+        assert CheerTalk.objects.get(id=4).is_blocked == True
+        assert Report.objects.get(id=3).state == "PENDING"
+        assert CheerTalk.objects.get(id=2).is_blocked == False
 
     @pytest.mark.django_db
     def test_invalid_report(self, load_sql_fixture, dependency_fixture):
