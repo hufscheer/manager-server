@@ -6,7 +6,7 @@ from accounts.domain import IsAdminUser
 from report.containers import ReportContainer
 from drf_yasg.utils import swagger_auto_schema
 
-class BlockCheerTalkView(APIView):
+class InvalidReportView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
@@ -17,7 +17,7 @@ class BlockCheerTalkView(APIView):
     @swagger_auto_schema(responses={"200": ""})
     def post(self, request, report_id: int):
         """
-        PENDING 상태인 report를 VALID로 만들고 응원톡을 블럭하거나, VALID인 report를 PENDING으로 만들고 응원톡을 블럭 취소하는 API
+        상태가 PENDING 신고 중에서 허위 신고를 Invalid 상태로 변경시키는 api
         """
-        response = self._report_service.block_cheer_talk(report_id)
+        response = self._report_service.make_report_invalid(report_id)
         return Response(response, status=status.HTTP_200_OK)

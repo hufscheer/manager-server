@@ -94,4 +94,5 @@ VALUES  (3, '2023-11-11 00:00:00', '이미 신고된 댓글이야', false, 1),
 
 INSERT INTO reports (id, cheer_talk_id, reported_at, state)
 VALUES  (1, 3, '2023-11-11 00:00:00', 'UNCHECKED'),
-        (2, 4, '2023-11-13 00:00:00', 'PENDING');
+        (2, 4, '2023-11-13 00:00:00', 'PENDING'),
+        (3, 2, '2023-11-13 00:00:00', 'VALID');

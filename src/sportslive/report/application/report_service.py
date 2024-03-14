@@ -22,14 +22,24 @@ class ReportService:
         response_dto = self._ResponseDto(pending_report_infos, blocked_cheer_talks_infos)
         return ReportResponseSerializer(response_dto).data
     
-    def block_cheer_talk(self, cheer_talk_id: int):
-        cheer_talk: CheerTalk = self._cheer_talk_repository.find_cheer_talk_by_id(cheer_talk_id)
+    def block_cheer_talk(self, report_id: int):
+        report: Report = self._report_repository.find_report_by_id(report_id)
+        cheer_talk: CheerTalk = self._cheer_talk_repository.find_cheer_talk_by_id(report.cheer_talk_id)
 
-        if cheer_talk.is_bool_blocked == False:
+        if report.state == "PENDING":
             cheer_talk.is_blocked = True
-        elif cheer_talk.is_bool_blocked == True:
+            report.state = "VALID"
+        elif report.state == "VALID":
             cheer_talk.is_blocked = False
+            report.state = "PENDING"
+
+        self._report_repository.save_report(report)
         self._cheer_talk_repository.save_cheer_talk(cheer_talk)
+        
+    def make_report_invalid(self, report_id: int):
+        report: Report = self._report_repository.find_report_by_id(report_id)
+        report.state = 'INVALID'
+        self._report_repository.save_report(report)
 
     def _get_report_info_object(self, game_team_ids: list[int], reports_or_cheer_talks: List[Union[CheerTalk, Report]], user_data: Member):
         game_team_objects = self._game_repository.find_game_team_with_game_league_and_sport_by_ids(game_team_ids, user_data)
