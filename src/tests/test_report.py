@@ -32,3 +32,8 @@ class TestReport:
         self._report_service.block_cheer_talk(1)
         self._report_service.block_cheer_talk(2)
         assert CheerTalk.objects.get(id=1).is_blocked == True
+
+    @pytest.mark.django_db
+    def test_invalid_report(self, load_sql_fixture, dependency_fixture):
+        self._report_service.make_report_invalid(2)
+        assert Report.objects.get(id=2).state == 'INVALID'
