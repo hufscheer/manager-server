@@ -31,6 +31,11 @@ class ReportService:
             cheer_talk.is_blocked = False
         self._cheer_talk_repository.save_cheer_talk(cheer_talk)
 
+    def make_report_invalid(self, report_id: int):
+        report: Report = self._report_repository.find_report_by_id(report_id)
+        report.state = 'INVALID'
+        self._report_repository.save_report(report)
+
     def _get_report_info_object(self, game_team_ids: list[int], reports_or_cheer_talks: List[Union[CheerTalk, Report]], user_data: Member):
         game_team_objects = self._game_repository.find_game_team_with_game_league_and_sport_by_ids(game_team_ids, user_data)
         game_team_dict = {game_team.id: game_team for game_team in game_team_objects}
