@@ -6,7 +6,7 @@ class TeamRepository:
         team.save()
 
     def find_all_teams_by_league_id(self, league_id: int):
-        return get_list_or_404(LeagueTeam, league_id=league_id)
+        return LeagueTeam.objects.filter(league_id=league_id)
     
     def find_team_by_id(self, team_id: int):
         return get_object_or_404(LeagueTeam, id=team_id)
