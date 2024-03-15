@@ -5,7 +5,7 @@ from sport.domain import Sport
 class LeagueSport(models.Model):
     id = models.BigAutoField(primary_key=True)
     sport = models.ForeignKey(Sport, models.DO_NOTHING)
-    league = models.ForeignKey('League', models.DO_NOTHING)
+    league = models.ForeignKey('League', models.DO_NOTHING, related_name='league_sports')
 
     class Meta:
         db_table = 'league_sports'

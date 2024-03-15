@@ -1,5 +1,6 @@
 from league.domain import LeagueSport, League
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.db.models import Prefetch
 
 class LeagueRepository:
     def save_sports(self, league_sport: LeagueSport):
@@ -17,5 +18,14 @@ class LeagueRepository:
         else:
             league.save()
             
-    def get_all_leagues_by_organization_id(self, organization_id: int):
-        return League.objects.filter(organization_id=organization_id, is_deleted=False).order_by('-start_at')
+    def find_all_leagues_with_sport_by_organization_id(self, organization_id: int):
+        league_sport_prefetch = Prefetch(
+        'league_sports',
+        queryset=LeagueSport.objects.select_related('sport')
+        )
+        return League.objects.filter(
+            organization_id=organization_id, 
+            is_deleted=False
+        ).prefetch_related(
+            league_sport_prefetch
+        ).order_by('-start_at')

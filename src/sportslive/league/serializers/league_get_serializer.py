@@ -1,5 +1,12 @@
 from rest_framework import serializers
 from league.domain import League
+from sport.domain import Sport
+
+class _SportDataSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Sport
+        fields = ('id', 'name')
 
 class LeagueGetSerializer(serializers.ModelSerializer):
     leagueId = serializers.IntegerField(source='id')
@@ -7,7 +14,8 @@ class LeagueGetSerializer(serializers.ModelSerializer):
     endAt = serializers.DateTimeField(source='end_at')
     inProgressRound = serializers.IntegerField(source='in_progress_round')
     maxRound = serializers.IntegerField(source='max_round')
+    sportData = _SportDataSerializer(source='sport_datas', many=True)
 
     class Meta:
         model = League
-        fields = ('leagueId' ,'name', 'startAt', 'endAt', 'inProgressRound', 'maxRound')
+        fields = ('leagueId' ,'name', 'startAt', 'endAt', 'inProgressRound', 'maxRound', 'sportData')
