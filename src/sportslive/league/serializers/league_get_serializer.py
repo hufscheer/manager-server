@@ -8,7 +8,7 @@ class _SportDataSerializer(serializers.ModelSerializer):
         model = Sport
         fields = ('id', 'name')
 
-class LeagueGetSerializer(serializers.ModelSerializer):
+class _LeagueGetSerializer(serializers.ModelSerializer):
     leagueId = serializers.IntegerField(source='id')
     startAt = serializers.DateTimeField(source='start_at')
     endAt = serializers.DateTimeField(source='end_at')
@@ -19,3 +19,8 @@ class LeagueGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = League
         fields = ('leagueId' ,'name', 'startAt', 'endAt', 'inProgressRound', 'maxRound', 'sportData')
+
+class LeagueListGetSerializer(serializers.Serializer):
+    playing = _LeagueGetSerializer(many=True)
+    scheduled = _LeagueGetSerializer(many=True)
+    finished = _LeagueGetSerializer(many=True)
