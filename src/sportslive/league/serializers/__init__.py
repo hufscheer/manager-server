@@ -4,4 +4,4 @@ from .league_serializer import (
                     LeagueDeleteSerializer,
                     LeagueRegisterResponseSerializer,
                 )
-from .league_get_serializer import LeagueGetSerializer
+from .league_get_serializer import LeagueListGetSerializer
