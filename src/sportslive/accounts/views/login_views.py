@@ -19,6 +19,14 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         refresh = RefreshToken.for_user(user)
 
-        return Response({
-            'access': str(refresh.access_token)
-        })
+        response = Response(status=status.HTTP_200_OK)
+        response.set_cookie(
+            key='access',
+            value=str(refresh.access_token),
+            httponly=True,  # HTTPOnly 설정으로 자바스크립트 접근 방지
+            samesite='Strict',  # SameSite 정책 설정
+            path='/',  # 쿠키가 유효한 경로
+            secure=True,  # HTTPS를 통해서만 쿠키 전송
+        )
+        return response
+        
