@@ -4,7 +4,7 @@ class CustomJWTAuthenticationMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        access_token = request.COOKIES.get('access')
+        access_token = request.COOKIES.get('HCC_SES')
         if access_token:
             request.META['HTTP_AUTHORIZATION'] = f'Bearer {access_token}'
         response = self.get_response(request)
