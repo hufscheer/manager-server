@@ -6,6 +6,7 @@ from rest_framework import routers
 from rest_framework import permissions
 from django.urls import include, path, re_path
 from django.conf import settings
+from league.presentation import MainGetView
 
 router = routers.DefaultRouter()
 
@@ -23,6 +24,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('main/', MainGetView.as_view()),
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
     path('games/', include("game.urls")),
