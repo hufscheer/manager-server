@@ -5,3 +5,4 @@ from .league_serializer import (
                     LeagueRegisterResponseSerializer,
                 )
 from .league_get_serializer import LeagueListGetSerializer
+from .main_serializer import MainListGetSerializer

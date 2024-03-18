@@ -29,3 +29,19 @@ class LeagueRepository:
         ).prefetch_related(
             league_sport_prefetch
         ).order_by('-start_at')
+    
+    def find_all_leagues_by_organization_id(self, organization_id: int):
+        return League.objects.filter(organization_id=organization_id)
+    
+    def find_all_leagues_with_games_by_organization_id(self, organization_id: int):
+        from game.domain import Game
+        league_games_prefetch = Prefetch(
+            'league_games',
+            queryset=Game.objects.filter(state='PLAYING')
+        )
+        return League.objects.filter(
+            organization_id=organization_id,
+            is_deleted=False
+        ).prefetch_related(
+            league_games_prefetch
+        ).order_by('-start_at')
