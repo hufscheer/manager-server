@@ -21,7 +21,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         response = Response(status=status.HTTP_200_OK)
         response.set_cookie(
-            key='access',
+            key='HCC_SES',
             value=str(refresh.access_token),
             httponly=True,  # HTTPOnly 설정으로 자바스크립트 접근 방지
             samesite='Strict',  # SameSite 정책 설정
