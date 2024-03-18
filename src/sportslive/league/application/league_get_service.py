@@ -1,5 +1,5 @@
 from league.domain import LeagueRepository
-from league.serializers import LeagueListGetSerializer
+from league.serializers import LeagueListGetSerializer, MainListGetSerializer
 from league.domain import League, LeagueSport
 from datetime import datetime
 import pytz
@@ -15,6 +15,21 @@ class LeagueGetService:
         league_get_serializer = LeagueListGetSerializer(self._ListWrapping(result_dict))
         return league_get_serializer.data
     
+    def get_main(self, user_data):
+        organization_id: int = user_data.organization_id
+        leagues: list[League] = self._league_repository.find_all_leagues_with_games_by_organization_id(organization_id)
+        playing_leagues = []
+        for league in leagues:
+            result = self._classify_league(league)
+            if result == 'playing':
+                playing_leagues.append(league)
+
+        for playing_league in playing_leagues:
+            playing_league.playing_game_datas = playing_league.league_games.all()
+
+        main_list_get_serialzier = MainListGetSerializer(playing_leagues, many=True)
+        return main_list_get_serialzier.data
+
     def _classify_league_and_add_sport_data(self, leagues: list[League]):
         result_dict = {
             "playing": [],
