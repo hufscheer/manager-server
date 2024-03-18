@@ -10,8 +10,9 @@ class _MainGameInfoSerializer(serializers.ModelSerializer):
         fields = ('id', 'startTime', 'name', 'round',)
 
 class MainListGetSerializer(serializers.ModelSerializer):
+    leagueName = serializers.CharField(source='name')
     playingGameData = _MainGameInfoSerializer(many=True, source='playing_game_datas')
 
     class Meta:
         model = League
-        fields = ('name', 'playingGameData',)
+        fields = ('leagueName', 'playingGameData',)
