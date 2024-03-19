@@ -7,12 +7,13 @@ from game.presentation import (
                                 LineupPlayerView,
                                 LineupPlayerGetView,
                                 GameTeamGetView,
+                                GameDeleteView,
                             )
 app_name = 'game'
 
 urlpatterns = [
     path('<int:league_id>/', GameView.as_view()),
-    path('<int:game_id>/delete/', GameView.as_view()),
+    path('<int:game_id>/delete/', GameDeleteView.as_view()),
     path('<int:game_id>/change/', GameChangeView.as_view()),
     path('score/', GameScoreView.as_view()),
     path('<int:game_id>/info/', GameGetView.as_view()),

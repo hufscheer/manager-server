@@ -6,3 +6,4 @@ from .lineup_player_get_view import LineupPlayerGetView
 from .game_score_view import GameScoreView
 from .game_get_view import GameGetView
 from .game_team_get_view import GameTeamGetView
+from .game_delete_view import GameDeleteView
