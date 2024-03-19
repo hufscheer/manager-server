@@ -19,5 +19,5 @@ class GameDeleteView(APIView):
         """
         게임 삭제 API
         """
-        self._game_serivce.delete_game(game_id, request.data, request.user)
+        self._game_serivce.delete_game(game_id, request.user)
         return Response(status=status.HTTP_204_NO_CONTENT)
