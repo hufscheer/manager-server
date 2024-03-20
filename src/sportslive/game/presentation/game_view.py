@@ -22,4 +22,4 @@ class GameView(APIView):
         게임 등록 API
         """
         self._game_serivce.create_game(league_id, request.data, request.user)
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
