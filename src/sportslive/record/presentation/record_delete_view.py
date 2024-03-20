@@ -15,9 +15,9 @@ class RecordDeleteView(APIView):
         self._record_service = RecordContainer.record_service()
 
     @swagger_auto_schema(responses={"204": ""})
-    def put(self, request, record_id: int, extra_record_id: int, record_type: str):
+    def delete(self, request, record_id: int, record_type: str):
         """
         타임 라인 삭제 API
         """
-        self._record_service.delete_record(record_id, extra_record_id, record_type)
+        self._record_service.delete_record(record_id, record_type)
         return Response(status=status.HTTP_204_NO_CONTENT)

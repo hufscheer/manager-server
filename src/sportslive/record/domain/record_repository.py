@@ -12,11 +12,11 @@ class RecordRepository:
     def find_record_by_id_with_game_team(self, record_id: int):
         return get_object_or_404(Record.objects.select_related('game_team'), id=record_id)
 
-    def find_score_record_by_id(self, score_record_id: int):
-        return get_object_or_404(ScoreRecord, id=score_record_id)
+    def find_score_record_by_record_id(self, record_id: int):
+        return get_object_or_404(ScoreRecord, record_id=record_id)
     
-    def find_replacement_record_by_id(self, replaement_record_id: int):
-        return get_object_or_404(ReplacementRecord, id=replaement_record_id)
+    def find_replacement_record_by_record_id(self, record_id: int):
+        return get_object_or_404(ReplacementRecord, record_id=record_id)
     
     def delete_record(self, record: Union[Record, ReplacementRecord, ScoreRecord]):
         return record.delete()

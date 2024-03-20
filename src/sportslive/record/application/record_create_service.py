@@ -24,18 +24,18 @@ class RecordCreateService:
         game_team_id: int = record_data.get('game_team_id')
         game_team: GameTeam = self._game_repository.find_game_team_by_id(game_team_id)
         game: Game = self._game_repository.find_game_by_id(game_id)
-        new_record = self._create_and_save_record_object(game_team, record_data, game_id, game)
+        new_record = self._create_and_save_record_object(game_team, record_data, game_id, game, record_type)
 
         if record_type == "score":
             self._create_and_save_score_record_object(game_team, new_record, record_data)
         elif record_type == "replacement":
             self._create_and_save_replacement_record_object(new_record, record_data)
 
-    def _create_and_save_record_object(self, game_team: GameTeam, record_data, game_id: int, game: Game) -> Record:
+    def _create_and_save_record_object(self, game_team: GameTeam, record_data, game_id: int, game: Game, record_type: str) -> Record:
         datetime_recorded_at = record_data.get('recorded_at')
         int_recorded_at = self._make_integer_recorded_at(datetime_recorded_at, game)
         recorded_quarter_id = record_data.get('recorded_quarter_id')
-        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, 'score', int_recorded_at)
+        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, record_type, int_recorded_at)
         self._record_repository.save_record(new_record)
         return new_record
     
