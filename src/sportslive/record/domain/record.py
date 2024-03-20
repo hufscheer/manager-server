@@ -19,7 +19,7 @@ class Record(models.Model):
 
 class ScoreRecord(models.Model):
     id = models.BigAutoField(primary_key=True)
-    record = models.ForeignKey(Record, models.CASCADE)
+    record = models.OneToOneField(Record, models.CASCADE)
     lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
     score = models.IntegerField()
 
@@ -28,7 +28,7 @@ class ScoreRecord(models.Model):
 
 class ReplacementRecord(models.Model):
     id = models.BigAutoField(primary_key=True)
-    record = models.ForeignKey(Record, models.CASCADE)
+    record = models.OneToOneField(Record, models.CASCADE)
     origin_lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
     replaced_lineup_player = models.ForeignKey(LineupPlayer, models.CASCADE)
     
