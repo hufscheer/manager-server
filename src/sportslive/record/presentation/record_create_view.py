@@ -25,7 +25,8 @@ class RecordCreateView(APIView):
             "recordedQuarterId": int,
             "scoreLineupPlayerId": int,
             "recordedQuarterId": int,
-            "score": int
+            "score": int,
+            "recordedAt": datetime
         }
         record type이 "replacement" 일 경우:
         {
@@ -33,7 +34,8 @@ class RecordCreateView(APIView):
             "recordedQuarterId": int,
             "originLineupPlayerId": int,
             "recordedQuarterId": int,
-            "replacedLineupPlayerId": int
+            "replacedLineupPlayerId": int,
+            "recordedAt": datetime
         }
         """
         self._record_service.create_record(game_id, record_type, request.data)
