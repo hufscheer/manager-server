@@ -14,3 +14,6 @@ class TeamSaveSerializer(serializers.ModelSerializer):
 class TeamChangeRequestSerializer(TeamRegisterRequestSerializer):
     name = serializers.ListField(child=serializers.CharField())
     logo = serializers.ListField(child=serializers.ImageField())
+
+class TeamRegisterResponseSerializer(serializers.Serializer):
+    teamIds = serializers.ListField(child=serializers.IntegerField(), source='team_ids')

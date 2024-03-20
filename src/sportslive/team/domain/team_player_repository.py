@@ -15,4 +15,4 @@ class TeamPlayerRepository:
         return get_object_or_404(LeagueTeamPlayer.objects.select_related('league_team'), id=team_player_id)
     
     def find_team_player_by_team_id(self, team_id: int):
-        return get_list_or_404(LeagueTeamPlayer, league_team_id=team_id)
+        return LeagueTeamPlayer.objects.filter(league_team_id=team_id)
