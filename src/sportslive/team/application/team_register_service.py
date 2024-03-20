@@ -8,7 +8,7 @@ from team.dto import TeamMakeDTO
 from league.domain import League
 from utils.s3 import AbstractS3Connect
 from utils.sqs import AbstractSqsConnect
-from team.serializers import TeamRegisterRequestSerializer
+from team.serializers import TeamRegisterRequestSerializer, TeamRegisterResponseSerializer
 
 class TeamRegisterService:
     def __init__(
@@ -34,8 +34,9 @@ class TeamRegisterService:
         self._check_logo_str(teams_logos)
 
         self._upload_logo_on_s3(teams_logos, teams_names, league)               
-        self._make_and_save_team_in_transaction(teams_names, league, user_data)
+        success_save_team_ids = self._make_and_save_team_in_transaction(teams_names, league, user_data)
         self._send_sqs_message()
+        return TeamRegisterResponseSerializer(self._TeamIdsDto(success_save_team_ids)).data
 
     def _upload_logo_on_s3(self, teams_logos, teams_names, league: League):
         # 로고들을 S3에 업로드 하는 로직
@@ -59,18 +60,21 @@ class TeamRegisterService:
         
     def _make_and_save_team_in_transaction(self, teams_names, league: League, user_data: dict):
         save_error_teams = []
+        success_save_team_ids = []
         try:
             with transaction.atomic():
                 for i, team_name in enumerate(teams_names):
                     logo_url = self._uploaded_logo_urls[i]
                     new_team = LeagueTeam(name=team_name, logo_image_url=logo_url, league=league, manager=user_data, organization=user_data.organization)
                     self._team_repository.save_team(new_team)
+                    success_save_team_ids.append(new_team.id)
         except:
             save_error_teams.append(team_name)
         if save_error_teams:
             self._delete_s3_object(self._logo_uploaded_teams_keys)
             raise TeamSaveError(save_error_teams)
-
+        return success_save_team_ids
+    
     def _send_sqs_message(self):
         sqs_conn = self._sqs_conn
         for logo_uploaded_teams_key in self._logo_uploaded_teams_keys:
@@ -89,3 +93,7 @@ class TeamRegisterService:
         def __init__(self, name: str, logo_image_url: str):
             self.name = name
             self.logo_image_url = logo_image_url
+
+    class _TeamIdsDto:
+        def __init__(self, team_ids: list[int]):
+            self.team_ids = team_ids
