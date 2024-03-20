@@ -3,7 +3,7 @@ from decouple import config
 import pymysql
 
 pymysql.install_as_MySQLdb()
-DEBUG = True
+DEBUG = False
 
 STATIC_URL = '/static/'
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
