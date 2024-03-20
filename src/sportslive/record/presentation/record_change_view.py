@@ -15,7 +15,7 @@ class RecordChangeView(APIView):
         self._record_service = RecordContainer.record_service()
 
     @swagger_auto_schema(responses={"200": ""})
-    def put(self, request, record_id: int, extra_record_id: int, record_type: str):
+    def put(self, request, record_id: int, record_type: str):
         """
         타임 라인 수정 API
         record type이 "score" 일 경우:
@@ -37,5 +37,5 @@ class RecordChangeView(APIView):
             "replacedLineupPlayerId": int
         }
         """
-        self._record_service.change_record(record_id, extra_record_id, record_type, request.data)
+        self._record_service.change_record(record_id, record_type, request.data)
         return Response(status=status.HTTP_200_OK)
