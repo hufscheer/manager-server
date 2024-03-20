@@ -6,6 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.domain import IsAdminUser
 from team.containers import TeamContainer
 from drf_yasg.utils import swagger_auto_schema
+from team.serializers import TeamRegisterResponseSerializer
 
 class TeamRegisterView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -15,7 +16,7 @@ class TeamRegisterView(APIView):
         super().__init__(*args, **kwargs)
         self._team_register_service = TeamContainer.team_register_service()
     
-    @swagger_auto_schema(responses={"201": ""})
+    @swagger_auto_schema(responses={"201": TeamRegisterResponseSerializer})
     def post(self, request, league_id: int):
         """
         리그팀 등록 API 입니다.
