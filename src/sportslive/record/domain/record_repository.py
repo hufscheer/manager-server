@@ -21,14 +21,26 @@ class RecordRepository:
     def delete_record(self, record: Union[Record, ReplacementRecord, ScoreRecord]):
         return record.delete()
     
-    def find_score_record_by_record_id_with_record_quarter_and_league_team(self, record_id: int):
+    def find_score_record_by_record_id_with_fetch_join(self, record_id: int):
         return get_object_or_404(
-            ScoreRecord.objects.select_related('record', 'record__recorded_quarter', 'record__game_team__league_team'),
+            ScoreRecord.objects.select_related('record',
+                                               'lineup_player',
+                                               'record__recorded_quarter',
+                                               'record__game_team',
+                                               'record__game_team__league_team'
+            ),
             record_id=record_id
         )
     
-    def find_replacement_record_by_record_id_with_record_quarter_and_league_team(self, record_id: int):
+    def find_replacement_record_by_record_id_with_fetch_join(self, record_id: int):
         return get_object_or_404(
-            ReplacementRecord.objects.select_related('record', 'record__recorded_quarter', 'record__game_team__league_team'),
+            ReplacementRecord.objects.select_related(
+                'record',
+                'origin_lineup_player',
+                'replaced_lineup_player',
+                'record__recorded_quarter',
+                'record__game_team',
+                'record__game_team__league_team'
+            ),
             record_id=record_id
         )
