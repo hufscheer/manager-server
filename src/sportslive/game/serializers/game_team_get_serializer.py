@@ -8,6 +8,12 @@ class LineupPlayerGetSerializer(serializers.ModelSerializer):
         model = LineupPlayer
         fields = ('id', 'name', 'description', 'number', 'isCaptain')
 
+class LineupPlayerNameNumberGetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LineupPlayer
+        fields = ('id', 'name', 'number')
+
 class GameTeamInfoSerializer(serializers.ModelSerializer):
     gameTeamId = serializers.IntegerField(source='id')
     gameTeamName = serializers.CharField(source='league_team.name')
@@ -17,3 +23,11 @@ class GameTeamInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameTeam
         fields = ('gameTeamId', 'gameTeamName', 'logoImageUrl', 'score')
+
+class GameTeamNameInfoSerializer(serializers.ModelSerializer):
+    gameTeamId = serializers.IntegerField(source='id')
+    gameTeamName = serializers.CharField(source='league_team.name')
+    
+    class Meta:
+        model = GameTeam
+        fields = ('gameTeamId', 'gameTeamName')

@@ -12,4 +12,9 @@ from .game_team_serializer import (
                             LineupPlayerChangeSerialzier,
                             GameScoreChangeSerializer
                             )
-from .game_team_get_serializer import LineupPlayerGetSerializer, GameTeamInfoSerializer
+from .game_team_get_serializer import (
+        LineupPlayerGetSerializer,
+        GameTeamInfoSerializer,
+        GameTeamNameInfoSerializer,
+        LineupPlayerNameNumberGetSerializer
+    )
