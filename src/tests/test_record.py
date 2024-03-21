@@ -63,7 +63,7 @@ class TestRecord:
             "scoreLineupPlayerId": 9,
             "score": 1
         }
-        self._record_service.change_record(1, 'score', request_data)
+        self._record_service.change_record(1, request_data)
 
         assert Record.objects.get(id=1).recorded_at == 2
         assert Record.objects.get(id=1).recorded_quarter_id == 2
@@ -81,7 +81,7 @@ class TestRecord:
             "scoreLineupPlayerId": 10,
             "score": 2
         }
-        self._record_service.change_record(1, 'score', request_data)
+        self._record_service.change_record(1, request_data)
 
         assert Record.objects.get(id=1).recorded_at == 2
         assert Record.objects.get(id=1).recorded_quarter_id == 2
@@ -101,7 +101,7 @@ class TestRecord:
             "recordedQuarterId": 2,
             "replacedLineupPlayerId": 11
         }
-        self._record_service.change_record(3, 'replacement', request_data)
+        self._record_service.change_record(3, request_data)
 
         assert ReplacementRecord.objects.get(id=1).origin_lineup_player_id == 12
         assert ReplacementRecord.objects.get(id=1).replaced_lineup_player_id == 11
@@ -111,8 +111,8 @@ class TestRecord:
         """
         score 타임라인 하나를 삭제한다
         """
-        self._record_service.delete_record(1, 'score')
-        self._record_service.delete_record(2, 'score')
+        self._record_service.delete_record(1)
+        self._record_service.delete_record(2)
 
         assert Record.objects.filter(id=1).exists() == False
         assert ScoreRecord.objects.filter(id=1).exists() == False

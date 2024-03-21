@@ -4,3 +4,7 @@ from .record_serializer import (
     ScoreRecordChangeRequestSerializer,
     ReplacementRecordChangeRequestSerializer,
 )
+from .record_get_serializer import (
+    ReplacementRecordResponseSerializer,
+    ScoreRecordResponseSerializer
+)

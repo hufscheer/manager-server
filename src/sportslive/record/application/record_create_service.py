@@ -35,7 +35,8 @@ class RecordCreateService:
         datetime_recorded_at = record_data.get('recorded_at')
         int_recorded_at = self._make_integer_recorded_at(datetime_recorded_at, game)
         recorded_quarter_id = record_data.get('recorded_quarter_id')
-        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, record_type, int_recorded_at)
+        record_type_upper = record_type.upper()
+        new_record: Record = self._create_new_record_object(game_id, game_team, recorded_quarter_id, record_type_upper, int_recorded_at)
         self._record_repository.save_record(new_record)
         return new_record
     
