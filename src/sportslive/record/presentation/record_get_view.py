@@ -15,6 +15,6 @@ class RecordGetView(APIView):
         self._record_get_service = RecordContainer.record_get_service()
 
     @swagger_auto_schema(responses={"200": ""})
-    def get(self, request, record_id: int, record_type: str):
+    def get(self, request, record_id: int):
         response = self._record_get_service.get_record_detail(record_id)
         return Response(response, status=status.HTTP_200_OK)
