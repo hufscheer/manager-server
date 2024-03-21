@@ -11,11 +11,12 @@ class TestReport:
     @pytest.fixture
     def dependency_fixture(self):
         self._report_service = ReportContainer.report_service()
+        self._report_get_service = ReportContainer.report_get_service()
 
     @pytest.mark.django_db
     def test_get_report_info(self, load_sql_fixture, dependency_fixture):
         member = Member.objects.get(id=1)
-        response = self._report_service.get_report_info(member)
+        response = self._report_get_service.get_report_info(member)
         
         assert 'pending' in response
         assert 'isBlocked' in response
