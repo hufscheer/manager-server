@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 from record.domain import RecordRepository
-from record.application import RecordCreateService, RecordService
+from record.application import RecordCreateService, RecordService, RecordGetService
 from game.domain import GameRepository
 
 class RecordContainer(containers.DeclarativeContainer):
@@ -13,6 +13,11 @@ class RecordContainer(containers.DeclarativeContainer):
     )
     record_service = providers.Factory(
         RecordService,
+        record_repository=record_repository,
+        game_repository=game_repository,
+    )
+    record_get_service = providers.Factory(
+        RecordGetService,
         record_repository=record_repository,
         game_repository=game_repository,
     )
