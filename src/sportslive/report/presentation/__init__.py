@@ -1,3 +1,3 @@
-from .report_view import ReportView
+from .report_list_view import ReportListView
 from .block_cheertalk_view import BlockCheerTalkView
 from .invalid_report_view import InvalidReportView
