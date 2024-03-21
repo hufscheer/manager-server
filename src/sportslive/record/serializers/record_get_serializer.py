@@ -14,7 +14,7 @@ class _RecordResponseSerialzier(serializers.ModelSerializer):
         fields = ('game', 'gameTeam', 'recordedQuarter', 'recordedAt', 'recordType')
 
 class ScoreRecordResponseSerializer(serializers.ModelSerializer):
-    recordInfo = _RecordResponseSerialzier(source='record_info')
+    recordInfo = _RecordResponseSerialzier(source='record')
     lineupPlayer = LineupPlayerNameNumberGetSerializer(source='lineup_player')
 
     class Meta:
@@ -22,7 +22,7 @@ class ScoreRecordResponseSerializer(serializers.ModelSerializer):
         fields = ('recordInfo', 'lineupPlayer', 'score')
 
 class ReplacementRecordResponseSerializer(serializers.ModelSerializer):
-    recordInfo = _RecordResponseSerialzier(source='record_info')
+    recordInfo = _RecordResponseSerialzier(source='record')
     originLineupPlayer = LineupPlayerNameNumberGetSerializer(source='origin_lineup_player')
     replacedLineupPlayer = LineupPlayerNameNumberGetSerializer(source='replaced_lineup_player')
 
