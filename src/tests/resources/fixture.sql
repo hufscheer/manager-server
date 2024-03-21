@@ -71,9 +71,9 @@ VALUES  (1, 1, '미컴선수1', NULL, 11, 0),
         (12, 6, '인도선수2', NULL, 44, 1);
 
 INSERT INTO records (id, record_type, game_id, game_team_id, recorded_quarter_id, recorded_at)
-VALUES  (1, 'score', 3, 5, 1, 31),
-        (2, 'score', 3, 5, 1, 44),
-        (3, 'replacement', 3, 6, 2, 3);
+VALUES  (1, 'SCORE', 3, 5, 1, 31),
+        (2, 'SCORE', 3, 5, 1, 44),
+        (3, 'REPLACEMENT', 3, 6, 2, 3);
 
 INSERT INTO score_records (id, score, lineup_player_id, record_id)
 VALUES (1, 1, 9, 1),
