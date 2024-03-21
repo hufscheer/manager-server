@@ -7,5 +7,5 @@ urlpatterns = [
     path('', ReportListView.as_view()),
     path('<int:report_id>/', ManageReportView.as_view()),
     path('invalid/<int:report_id>/', InvalidReportView.as_view()),
-    path('cheer-talks/<int:cheer_talk_id>/', BlockCheerTalkView.as_view()),
+    path('cheer-talk/<int:cheer_talk_id>/', BlockCheerTalkView.as_view()),
 ]
