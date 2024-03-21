@@ -18,7 +18,15 @@ class ReportService:
 
         self._report_repository.save_report(report)
         self._cheer_talk_repository.save_cheer_talk(cheer_talk)
-        
+    
+    def block_cheer_talk(self, cheer_talk_id: int):
+        cheer_talk: CheerTalk = self._cheer_talk_repository.find_cheer_talk_by_id(cheer_talk_id)
+        if cheer_talk.is_bool_blocked:
+            cheer_talk.is_blocked = False
+        else:
+            cheer_talk.is_blocked = True
+        self._cheer_talk_repository.save_cheer_talk(cheer_talk)
+
     def make_report_invalid(self, report_id: int):
         report: Report = self._report_repository.find_report_by_id(report_id)
         report.state = 'INVALID'
