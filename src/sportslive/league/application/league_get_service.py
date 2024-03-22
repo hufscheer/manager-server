@@ -2,7 +2,6 @@ from league.domain import LeagueRepository
 from league.serializers import LeagueListGetSerializer, MainListGetSerializer
 from league.domain import League, LeagueSport
 from datetime import datetime
-import pytz
 
 class LeagueGetService:
     def __init__(self, league_repository: LeagueRepository):
@@ -46,8 +45,7 @@ class LeagueGetService:
         return result_dict
 
     def _classify_league(self, league: League):
-        timezone = pytz.timezone("Asia/Seoul")
-        now = datetime.now(timezone)
+        now = datetime.now()
         if league.start_at > now:
             return 'scheduled'
         elif league.start_at <= now < league.end_at:

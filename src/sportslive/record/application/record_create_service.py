@@ -2,6 +2,7 @@ from record.domain import RecordRepository, Record, ScoreRecord, ReplacementReco
 from record.serializers import ScoreRecordRequestSerializer, ReplacementRecordRequestSerializer
 from game.domain import GameRepository, GameTeam, Game
 from datetime import datetime
+import pytz
 from utils.exceptions.record_exception import NotValidRecordTypeError
 
 class RecordCreateService:
@@ -58,8 +59,9 @@ class RecordCreateService:
         self._game_repository.save_game_team(game_team)
     
     def _make_integer_recorded_at(self, datetime_recorded_at, game: Game) -> int:
+        kst_timezone = pytz.timezone('Asia/Seoul')
+        datetime_recorded_at = kst_timezone.localize(datetime_recorded_at)
         recorded_at_diff = datetime_recorded_at - game.quarter_changed_at
-        print(datetime_recorded_at, game.quarter_changed_at)
         return recorded_at_diff.seconds // 60
 
     def _create_new_record_object(self, game_id: int, game_team: GameTeam, recorded_quarter_id: int, record_type: str, recorded_at: int) -> Record:
