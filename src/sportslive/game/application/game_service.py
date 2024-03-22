@@ -9,7 +9,6 @@ from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
 from utils.exceptions.game_exceptions import CantDeleteGameError
 from datetime import datetime
-from pytz import timezone
 
 class GameService:
     def __init__(self, game_repository: GameRepository, league_repository: LeagueRepository):
@@ -63,7 +62,7 @@ class GameService:
             start_time=game_data.get('start_time'),
             video_id=game_data.get('video_id', None),
             round=game_data.get('round'),
-            quarter_changed_at=datetime.now(timezone('Asia/Seoul'))
+            quarter_changed_at=datetime.now()
         )
     
     def _change_game_object(self, game: Game, game_change_data: dict):
@@ -74,7 +73,7 @@ class GameService:
         game.name = game_change_data.get('name')
         game.state = game_change_data.get('state')
         game.round = game_change_data.get('round')
-        game.quarter_changed_at = datetime.now(timezone('Asia/Seoul'))
+        game.quarter_changed_at = datetime.now()
         self._game_repository.save_game(game)
 
     def _create_game_team_object(self, team_id: int, game: Game) -> GameTeam:
