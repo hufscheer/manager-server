@@ -10,14 +10,14 @@ from team.application import (
 from league.domain import LeagueRepository
 from utils.s3 import S3Connect, FakeS3Connect
 from utils.sqs import SqsConnect, FakeSqsConnect
-from team.serializers import TeamRegisterRequestSerializer
 from team.dto import TeamRequestDTO, FakeTeamRequestDTO
+from game.domain import GameRepository
 
 class TeamContainer(containers.DeclarativeContainer):
     team_repository = providers.Factory(TeamRepository)
     league_repository = providers.Factory(LeagueRepository)
     team_player_repository = providers.Factory(TeamPlayerRepository)
-
+    game_repository = providers.Factory(GameRepository)
     team_service = providers.Factory(
         TeamService,
         team_repository=team_repository,
@@ -44,7 +44,8 @@ class TeamContainer(containers.DeclarativeContainer):
     team_player_get_service = providers.Factory(
         TeamPlayerGetService,
         team_repository=team_repository,
-        team_player_repository=team_player_repository
+        team_player_repository=team_player_repository,
+        game_repository=game_repository
     )
     test_team_service = providers.Factory(
         TeamService,
