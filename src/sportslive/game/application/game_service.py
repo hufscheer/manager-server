@@ -7,8 +7,9 @@ from game.serializers import (
                 )
 from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
-from utils.exceptions.game_exceptions import CantDeleteGameError
+from utils.exceptions.game_exceptions import CantDeleteGameError, CantParsingYoutubeUrl
 from datetime import datetime
+import re
 
 class GameService:
     def __init__(self, game_repository: GameRepository, league_repository: LeagueRepository):
@@ -60,7 +61,7 @@ class GameService:
             league=league,
             name=game_data.get('name'),
             start_time=game_data.get('start_time'),
-            video_id=game_data.get('video_id', None),
+            video_id=self._parsing_youtube_url(game_data.get('video_id', None)),
             round=game_data.get('round'),
             quarter_changed_at=datetime.now()
         )
@@ -68,7 +69,7 @@ class GameService:
     def _change_game_object(self, game: Game, game_change_data: dict):
         game.sport_id = game_change_data.get('sport_id')
         game.start_time = game_change_data.get('start_time')
-        game.video_id = game_change_data.get('video_id')
+        game.video_id = self._parsing_youtube_url(game_change_data.get('video_id', None))
         game.game_quarter = game_change_data.get('game_quarter')
         game.name = game_change_data.get('name')
         game.state = game_change_data.get('state')
@@ -79,6 +80,22 @@ class GameService:
     def _create_game_team_object(self, team_id: int, game: Game) -> GameTeam:
         return GameTeam(game=game, league_team_id=team_id)
     
+    def _parsing_youtube_url(self, video_url):
+        if not video_url:
+            return None
+        
+        regex_patterns = [
+            r'(?:v=|\/)([0-9A-Za-z_-]{11}).*',
+            r'youtu\.be\/([0-9A-Za-z_-]{11}).*'
+        ]
+        
+        for pattern in regex_patterns:
+            match = re.search(pattern, video_url)
+            if match:
+                return match.group(1)
+        
+        raise CantParsingYoutubeUrl
+
     class _ExtraGameInfoDTO:
         def __init__(self, sport_name: str, state: str):
             self.sport_name = sport_name
