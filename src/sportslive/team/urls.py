@@ -7,6 +7,7 @@ from team.presentation import (
     TeamRegisterView,
     TeamPlayerUpdateDeleteView,
     TeamPlayerGetByGameTeamView,
+    TeamDeleteView,
 )
 
 app_name = 'team'
@@ -14,6 +15,7 @@ app_name = 'team'
 urlpatterns = [
     path('register/<int:league_id>/', TeamRegisterView.as_view()),
     path('<int:team_id>/change/', TeamView.as_view()),
+    path('<int:team_id>/delete/', TeamDeleteView.as_view()),
     path('<int:league_id>/', TeamGetView.as_view()),
     path('<int:team_id>/player/', TeamPlayerCreateView.as_view()),
     path('player/<int:team_player_id>/', TeamPlayerUpdateDeleteView.as_view()),

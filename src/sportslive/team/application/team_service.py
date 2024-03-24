@@ -31,6 +31,12 @@ class TeamService:
         self._team_repository.save_team(team)
         self._sqs_conn.send_message_to_sqs(s3_key)
 
+    def delete_team(self, team_id: int, user_data: Member):
+        team: LeagueTeam = self._team_repository.find_team_with_league_by_id(team_id)
+        if team.organization != user_data.organization:
+            raise PermissionDenied
+        self._team_repository.delete_team(team)
+        
     def _send_sqs_message(self, s3_key):
         sqs_conn = self._sqs_conn
         sqs_conn.send_message_to_sqs(s3_key)
