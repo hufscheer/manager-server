@@ -31,9 +31,9 @@ class TestTeam:
     @pytest.mark.django_db
     def test_fail_change_teams1(self, load_sql_fixture, dependency_fixture, image_data_fixture):
         """
-        테스트를 만든 사람이 아닐 때
+        테스트를 만든 organization이 아닐 때
         """
-        member = Member.objects.get(id=2)
+        member = Member.objects.get(id=3)
         request_data = {
 	        "name": ['바꾼팀'],
 	        "logo": [self.img_data]

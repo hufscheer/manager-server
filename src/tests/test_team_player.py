@@ -55,7 +55,7 @@ class TestLeagueTeamPlayer:
 
     @pytest.mark.django_db
     def test_fail_delete_team_players(self, load_sql_fixture, dependency_fixture):
-        member = Member.objects.get(id=2)
+        member = Member.objects.get(id=3)
         with pytest.raises(PermissionDenied):
             self._team_player_service.delete_team_player(1, member)
     

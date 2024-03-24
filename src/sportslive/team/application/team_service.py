@@ -14,7 +14,7 @@ class TeamService:
 
     def change_team(self, request_data, team_id: int, user_data: Member):
         team: LeagueTeam = self._team_repository.find_team_with_league_by_id(team_id)
-        if team.manager.id != user_data.id:
+        if team.organization != user_data.organization:
             raise PermissionDenied
         team_change_request_serializer = TeamChangeRequestSerializer(data=request_data)
         team_change_request_serializer.is_valid(raise_exception=True)

@@ -36,6 +36,6 @@ class TeamPlayerService:
 
     def delete_team_player(self, team_player_id: int, user_data: Member):
         team_player: LeagueTeamPlayer = self._team_player_repository.find_team_player_with_team_by_id(team_player_id)
-        if team_player.league_team.manager_id != user_data.id:
+        if team_player.league_team.organization != user_data.organization:
             raise PermissionDenied
         self._team_player_repository.delete_team_player(team_player)
