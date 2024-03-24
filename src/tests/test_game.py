@@ -80,14 +80,15 @@ class TestGame:
         """
         결승전 바꾸기 실패
         """
-        member = Member.objects.get(id=2)
+        member = Member.objects.get(id=3)
         request_data = {
             "sportsId": 1,
             "startTime": "2024-03-22 14:00:00",
             "gameName": "결승",
-            "videoId": "video.com",
+            "videoId": "https://www.youtube.com/watch?v=ZTcCqJU_9qs",
             "gameQuarter": "전반전",
-            "state": "PLAYING"
+            "state": "PLAYING",
+            "round": 2
         }
         with pytest.raises(PermissionDenied):
             self._game_service.change_game(3, request_data, member)
