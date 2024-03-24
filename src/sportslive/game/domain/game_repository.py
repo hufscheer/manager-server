@@ -23,10 +23,8 @@ class GameRepository:
         return get_object_or_404(GameTeam, id=game_team_id)
     
     def find_game_team_with_game_league_and_sport_by_ids(self, game_team_ids: list, user: Member):
-        return get_list_or_404(
-                        GameTeam.objects.select_related('game__league', 'game__sport').filter(game__league__organization=user.organization),
-                        id__in=game_team_ids
-                    )
+        return GameTeam.objects.select_related('game__league', 'game__sport').filter(id__in=game_team_ids, game__league__organization=user.organization)
+                    
     def find_game_teams_with_team_by_game_id(self, game_id: int):
         return get_list_or_404(
             GameTeam.objects.select_related('league_team').filter(game_id=game_id)
