@@ -31,8 +31,8 @@ class GameService:
             self._game_repository.save_game_team(new_game_team)
 
     def change_game(self, game_id: int, request_data, user_data: Member):
-        game: Game = self._game_repository.find_game_by_id(game_id)
-        if game.manager_id != user_data.id:
+        game: Game = self._game_repository.find_game_with_manger_by_id(game_id)
+        if game.manager.organization != user_data.organization:
             raise PermissionDenied
 
         game_change_serializer = GameChangeSerializer(game, data=request_data)
