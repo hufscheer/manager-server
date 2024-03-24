@@ -1,5 +1,5 @@
 from league.domain import LeagueSport, League
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch
 
 class LeagueRepository:

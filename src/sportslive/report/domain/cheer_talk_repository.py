@@ -1,5 +1,5 @@
 from report.domain import CheerTalk
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 class CheerTalkRepository:
     def find_is_blocked_cheer_talks(self):
