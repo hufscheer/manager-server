@@ -46,7 +46,8 @@ class GameInfoResponseSerializer(serializers.ModelSerializer):
     gameName = serializers.CharField(source='name')
     videoId = serializers.CharField(source='video_id')
     gameQuarter = serializers.CharField(source='game_quarter')
+    maxRound = serializers.IntegerField(source="league.max_round")
 
     class Meta:
         model = Game
-        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter', 'state', 'round')
+        fields = ('sports', 'startTime', 'gameName', 'state', 'videoId', 'gameQuarter', 'state', 'maxRound', 'round')

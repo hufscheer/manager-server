@@ -52,7 +52,7 @@ class GameService:
         self._game_repository.delete_game(game)
 
     def get_game_info(self, game_id: int):
-        game: Game = self._game_repository.find_game_with_sport_by_id(game_id)
+        game: Game = self._game_repository.find_game_by_id_with_sport_and_league(game_id)
         game_info_response_serialzier = GameInfoResponseSerializer(game)
         return game_info_response_serialzier.data
     
