@@ -7,7 +7,7 @@ from game.serializers import (
                 )
 from league.domain import LeagueRepository, League
 from django.core.exceptions import PermissionDenied
-from utils.exceptions.game_exceptions import CantDeleteGameError, CantParsingYoutubeUrl
+from utils.exceptions.game_exceptions import CantDeleteGameError, CantParsingYoutubeUrl, BiggerThanMaxRoundError
 from datetime import datetime
 import re
 
@@ -22,6 +22,7 @@ class GameService:
         game_data: dict = game_request_serializer.validated_data
 
         league = self._league_repository.find_league_by_id(league_id)
+        self._check_round(game_data, league)
         new_game: Game = self._create_game_object(game_data, user_data, league)
         self._game_repository.save_game(new_game)
 
@@ -34,10 +35,11 @@ class GameService:
         game: Game = self._game_repository.find_game_with_manger_by_id(game_id)
         if game.manager.organization != user_data.organization:
             raise PermissionDenied
-
+        league = self._league_repository.find_league_by_id(game.league_id)
         game_change_serializer = GameChangeSerializer(game, data=request_data)
         game_change_serializer.is_valid(raise_exception=True)
         game_change_data = game_change_serializer.validated_data
+        self._check_round(game_change_data, league)
         self._change_game_object(game, game_change_data)
 
     def delete_game(self, game_id: int, user_data: Member):
@@ -54,6 +56,12 @@ class GameService:
         game_info_response_serialzier = GameInfoResponseSerializer(game)
         return game_info_response_serialzier.data
     
+    def _check_round(self, game_data: dict, league: League):
+        round = game_data.get('round')
+        league_max_round = league.max_round
+        if round > league_max_round:
+            raise BiggerThanMaxRoundError
+        
     def _create_game_object(self, game_data: dict, user_data: Member, league: League) -> Game:
         return Game(
             sport_id=game_data.get('sport_id'),
