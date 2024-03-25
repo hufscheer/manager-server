@@ -53,5 +53,6 @@ class LineupPlayerService:
             description=lineup_player_data.get('description'),
             number=lineup_player_data.get('number'),
             is_captain=lineup_player_data.get('is_captain'),
+            league_team_player_id=lineup_player_data.get('league_team_player_id')
         )
         self._game_repository.save_lineup_player(lineup_player)

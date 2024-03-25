@@ -3,10 +3,11 @@ from game.domain import LineupPlayer, GameTeam
 
 class LineupPlayerGetSerializer(serializers.ModelSerializer):
     isCaptain = serializers.BooleanField(source='is_captain')
-    
+    leagueTeamPlayerId = serializers.IntegerField(source='league_team_player_id')
+
     class Meta:
         model = LineupPlayer
-        fields = ('id', 'name', 'description', 'number', 'isCaptain')
+        fields = ('id', 'name', 'description', 'number', 'isCaptain', 'leagueTeamPlayerId')
 
 class LineupPlayerNameNumberGetSerializer(serializers.ModelSerializer):
 
