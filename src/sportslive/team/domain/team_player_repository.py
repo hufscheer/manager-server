@@ -16,3 +16,6 @@ class TeamPlayerRepository:
     
     def find_team_player_by_team_id(self, team_id: int):
         return LeagueTeamPlayer.objects.filter(league_team_id=team_id)
+    
+    def find_team_player_by_team_id_exclude_lineup_player(self, team_id: int, current_lineup_players_ids: list[int]):
+        return LeagueTeamPlayer.objects.filter(league_team_id=team_id).exclude(id__in=current_lineup_players_ids)
