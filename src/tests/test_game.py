@@ -3,7 +3,7 @@ from accounts.domain.member import Member
 from .fixture import load_sql_fixture
 from game.containers import GameContainer
 from game.domain import Game, GameTeam
-from utils.exceptions.game_exceptions import CantDeleteGameError, CantParsingYoutubeUrl
+from utils.exceptions.game_exceptions import CantDeleteGameError, CantParsingYoutubeUrl, BiggerThanMaxRoundError
 from django.core.exceptions import PermissionDenied
 class TestGame:
 
@@ -53,6 +53,22 @@ class TestGame:
         assert Game.objects.get(id=5).round == 16
         assert GameTeam.objects.filter(id=7).exists()
         assert GameTeam.objects.filter(id=8).exists()
+
+    @pytest.mark.django_db
+    def test_fail_create_game(self, load_sql_fixture, dependency_fixture):
+        member = Member.objects.get(id=1)
+        request_data = {
+            "sportsId": 1,
+            "startTime": "2024-03-22 14:00:00",
+            "gameName": "1경기",
+            "videoId": "https://youtu.be/yE0MWJN6KCU?si=Z_EQc0VbbQwSdmVk",
+            "teamIds": [
+                2, 3
+            ],
+            "round": 32
+        }
+        with pytest.raises(BiggerThanMaxRoundError):
+            self._game_service.create_game(1, request_data, member)
 
     @pytest.mark.django_db
     def test_change_game(self, load_sql_fixture, dependency_fixture):
@@ -105,9 +121,28 @@ class TestGame:
             "gameName": "결승",
             "videoId": "video.com",
             "gameQuarter": "전반전",
-            "state": "PLAYING"
+            "state": "PLAYING",
+            "round": 2
         }
         with pytest.raises(CantParsingYoutubeUrl):
+            self._game_service.change_game(3, request_data, member)
+
+    @pytest.mark.django_db
+    def test_fail_change_game3(self, load_sql_fixture, dependency_fixture):
+        """
+        결승전 바꾸기 실패3 (라운드가 max보다 큼)
+        """
+        member = Member.objects.get(id=1)
+        request_data = {
+            "sportsId": 1,
+            "startTime": "2024-03-22 14:00:00",
+            "gameName": "결승",
+            "videoId": "video.com",
+            "gameQuarter": "전반전",
+            "state": "PLAYING",
+            "round": 32
+        }
+        with pytest.raises(BiggerThanMaxRoundError):
             self._game_service.change_game(3, request_data, member)
 
     @pytest.mark.django_db
