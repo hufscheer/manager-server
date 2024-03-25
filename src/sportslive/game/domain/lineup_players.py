@@ -7,6 +7,7 @@ class LineupPlayer(models.Model):
     description = models.CharField(max_length=255, blank=True, null=True)
     number = models.IntegerField()
     is_captain = models.BooleanField(default=False)
+    league_team_player_id = models.IntegerField(null=True)
 
     class Meta:
         db_table = 'lineup_players'
