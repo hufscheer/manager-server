@@ -2,6 +2,7 @@ from record.domain import RecordRepository, Record, ScoreRecord, ReplacementReco
 from record.serializers import ScoreRecordRequestSerializer, ReplacementRecordRequestSerializer
 from game.domain import GameRepository, GameTeam, Game
 from utils.exceptions.record_exception import NotValidRecordTypeError
+from django.db import transaction
 
 class RecordCreateService:
     def __init__(self, record_repository: RecordRepository, game_repository: GameRepository):
@@ -23,12 +24,12 @@ class RecordCreateService:
         game_team_id: int = record_data.get('game_team_id')
         game_team: GameTeam = self._game_repository.find_game_team_by_id(game_team_id)
         game: Game = self._game_repository.find_game_by_id(game_id)
-        new_record = self._create_and_save_record_object(game_team, record_data, game_id, game, record_type)
-
-        if record_type == "score":
-            self._create_and_save_score_record_object(game_team, new_record, record_data)
-        elif record_type == "replacement":
-            self._create_and_save_replacement_record_object(new_record, record_data)
+        with transaction.atomic():
+            new_record = self._create_and_save_record_object(game_team, record_data, game_id, game, record_type)
+            if record_type == "score":
+                self._create_and_save_score_record_object(game_team, new_record, record_data)
+            elif record_type == "replacement":
+                self._create_and_save_replacement_record_object(new_record, record_data)
 
     def _create_and_save_record_object(self, game_team: GameTeam, record_data, game_id: int, game: Game, record_type: str) -> Record:
         datetime_recorded_at = record_data.get('recorded_at')

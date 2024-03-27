@@ -2,6 +2,7 @@ from record.domain import RecordRepository, Record, ScoreRecord, ReplacementReco
 from record.serializers import ScoreRecordChangeRequestSerializer, ReplacementRecordChangeRequestSerializer
 from game.domain import GameRepository, GameTeam
 from utils.exceptions.record_exception import NotValidRecordTypeError
+from django.db import transaction
 
 class RecordService:
     def __init__(self, record_repository: RecordRepository, game_repository: GameRepository):
@@ -14,28 +15,28 @@ class RecordService:
         record_data = self._get_record_data(record_type, request_data)
         game_team_id: int = record_data.get('game_team_id')
         game_team: GameTeam = self._game_repository.find_game_team_by_id(game_team_id)
-
-        self._change_and_save_record_object(record_data, target_record)
-
-        if record_type == "SCORE":
-            self._change_and_save_score_record_object(game_team, record_id, record_data)
-        elif record_type == "REPLACEMENT":
-            self._change_and_save_replacement_record_object(record_id, record_data)
+        with transaction.atomic():
+            self._change_and_save_record_object(record_data, target_record)
+            if record_type == "SCORE":
+                self._change_and_save_score_record_object(game_team, record_id, record_data)
+            elif record_type == "REPLACEMENT":
+                self._change_and_save_replacement_record_object(record_id, record_data)
 
     def delete_record(self, record_id: int):
         target_record: Record = self._record_repository.find_record_by_id(record_id)
         target_extra_record = None
         record_type = target_record.record_type
-        if record_type == "SCORE":
-            target_extra_record = self._record_repository.find_score_record_by_record_id(record_id)
-            game_team: GameTeam = self._game_repository.find_game_team_by_id(target_record.game_team_id)
-            self._change_game_team_score_when_delete(game_team, target_extra_record)
-    
-        elif record_type == "REPLACEMENT":
-            target_extra_record = self._record_repository.find_replacement_record_by_record_id(record_id)
-            
-        self._record_repository.delete_record(target_extra_record)
-        self._record_repository.delete_record(target_record)
+        with transaction.atomic():
+            if record_type == "SCORE":
+                target_extra_record = self._record_repository.find_score_record_by_record_id(record_id)
+                game_team: GameTeam = self._game_repository.find_game_team_by_id(target_record.game_team_id)
+                self._change_game_team_score_when_delete(game_team, target_extra_record)
+        
+            elif record_type == "REPLACEMENT":
+                target_extra_record = self._record_repository.find_replacement_record_by_record_id(record_id)
+                
+            self._record_repository.delete_record(target_extra_record)
+            self._record_repository.delete_record(target_record)
 
     def _get_record_data(self, record_type: str, request_data: dict):
         record_type_serializer_mapping = {
