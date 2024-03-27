@@ -56,19 +56,19 @@ VALUES  (1, 1, 0, 3),
         (4, 1, 0, 2),
         (4, 4, 0, 0);
 
-INSERT INTO lineup_players (id, game_team_id, name, description, number, is_captain)
-VALUES  (1, 1, '미컴선수1', NULL, 11, 0),
-        (2, 1, '미컴선수2', NULL, 22, 1),
-        (3, 2, '영어선수1', NULL, 33, 0),
-        (4, 2, '영어선수2', NULL, 11, 1),
-        (5, 3, '아랍선수1', NULL, 22, 0),
-        (6, 3, '아랍선수2', NULL, 11, 1),
-        (7, 4, '인도선수1', NULL, 22, 0),
-        (8, 4, '인도선수2', NULL, 44, 1),
-        (9, 5, '미컴선수1', NULL, 11, 1),
-        (10, 5, '미컴선수2', NULL, 22, 1),
-        (11, 6, '인도선수1', NULL, 22, 1),
-        (12, 6, '인도선수2', NULL, 44, 1);
+INSERT INTO lineup_players (id, game_team_id, name, description, number, is_captain, league_team_player_id)
+VALUES  (1, 1, '미컴선수1', NULL, 11, 0, 1),
+        (2, 1, '미컴선수2', NULL, 22, 1, 2),
+        (3, 2, '영어선수1', NULL, 33, 0, 3),
+        (4, 2, '영어선수2', NULL, 11, 1, 4),
+        (5, 3, '아랍선수1', NULL, 22, 0, 5),
+        (6, 3, '아랍선수2', NULL, 11, 1, 6),
+        (7, 4, '인도선수1', NULL, 22, 0, 7),
+        (8, 4, '인도선수2', NULL, 44, 1, 8),
+        (9, 5, '미컴선수1', NULL, 11, 1, 1),
+        (10, 5, '미컴선수2', NULL, 22, 1, 2),
+        (11, 6, '인도선수1', NULL, 22, 1, 7),
+        (12, 6, '인도선수2', NULL, 44, 1, 8);
 
 INSERT INTO records (id, record_type, game_id, game_team_id, recorded_quarter_id, recorded_at)
 VALUES  (1, 'SCORE', 3, 5, 1, 31),
