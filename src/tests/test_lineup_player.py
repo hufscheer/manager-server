@@ -21,13 +21,15 @@ class TestLineupPlayer:
             {
                 "name": "미컴선수3",
                 "number": 55,
-                "isCaptain": 0
+                "isCaptain": 0,
+                "leagueTeamPlayerId": 9
             },
             {
                 "name": "미컴선수4",
                 "number": 55,
                 "description": "부상",
-                "isCaptain": 0
+                "isCaptain": 0,
+                "leagueTeamPlayerId": 10
             }
         ]
         self._lineup_player_service.register_lineup_player(5, request_data)
@@ -35,6 +37,8 @@ class TestLineupPlayer:
         assert LineupPlayer.objects.get(id=14).name == "미컴선수4"
         assert LineupPlayer.objects.get(id=13).description == None
         assert LineupPlayer.objects.get(id=14).description == "부상"
+        assert LineupPlayer.objects.get(id=13).league_team_player_id == 9
+        assert LineupPlayer.objects.get(id=14).league_team_player_id == 10
 
     @pytest.mark.django_db
     def test_change_lineup_player(self, load_sql_fixture, dependency_fixture):
@@ -48,18 +52,21 @@ class TestLineupPlayer:
             {
                 "name": "미컴선수4",
                 "number": 66,
-                "isCaptain": 0
+                "isCaptain": 0,
+                "leagueTeamPlayerId": 9
             },
             {
                 "name": "미컴선수3",
                 "number": 55,
-                "isCaptain": 0
+                "isCaptain": 0,
+                "leagueTeamPlayerId": 10
             },
             {
                 "id": 9,
                 "name": "미컴선수1",
                 "number": 11,
-                "isCaptain": 1
+                "isCaptain": 1,
+                "leagueTeamPlayerId": 1
             }
         ]
         self._lineup_player_service.change_lineup_player(5, request_data)
